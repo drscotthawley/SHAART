@@ -24,7 +24,7 @@ Rational Acoustics, fyi.)  I mean, "SHAART" is just hilarious to say.
 
 Author: Dr. Scott H. Hawley, Associate Professor of Physics, 
         Belmont University, Nashville TN USA.  
-Date:   March 24, 2013
+Date:   March 24, 2015
 
 Contact:
 Improvements, bug reports, inquiries, donations, etc.: scott.hawley@(belmont)
