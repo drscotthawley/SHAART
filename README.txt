@@ -1,5 +1,5 @@
 ================================================================================
-SHAART v0.0 
+SHAART v0.5 
 
 Purpose: 
 SHAART is intended as an in-house solution for teaching PHY2010 ("Physics for 
@@ -24,7 +24,7 @@ Rational Acoustics, fyi.)  I mean, "SHAART" is just hilarious to say.
 
 Author: Dr. Scott H. Hawley, Associate Professor of Physics, 
         Belmont University, Nashville TN USA.  
-Date:   March 24, 2015
+Date:   March 24, 2013
 
 Contact:
 Improvements, bug reports, inquiries, donations, etc.: scott.hawley@(belmont)
