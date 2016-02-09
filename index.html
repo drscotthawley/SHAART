@@ -15,14 +15,18 @@
 
 </head>
 <body>
-<center>SHAART Acoustic Tools, v 0.4<br>
+<center>SHAART Acoustic Tools, v 0.5<br>
 <img src="shaart_logo.jpg"><br>
 <a href="#about">About</a> &nbsp;&nbsp;
 <a href="#downloads">Downloads</a> &nbsp;&nbsp;
 <a href="#notes">Release Notes</a> &nbsp;&nbsp;
 <a href="#license">License</a> &nbsp;&nbsp;
 <a href="#screenshots">Screenshots</a> &nbsp;&nbsp;
-<a href="#source">Running From Source</a> 
+<a href="#source">Running From Source</a> <br>
+<a href="#tutorial">Tutorial(s)</a><br>
+<br><br>
+SHAART is now on GitHub! <br>
+<a href="https://github.com/l0veweap0n/SHAART">GitHub SHAART Repository</a>
 </center>
 <br>
 <br>
@@ -44,15 +48,22 @@ That and "SHAART" is just hilarious to say, for other reasons. <br>
 <a name="license"><h2>License</h2></a>
 This software is both "Open Source" and "Free," released under the Jesus license: "Freely you have received, freely give" 
 (Matthew 10:8).
-Do as you like.  Modify, redistribute, etc.  <br>
-But since that's not legal enough,
-we'll say.... GPL 2 license.
-<br>
+Do as you like.  Modify, redistribute, etc.  See the <a href="https://github.com/l0veweap0n/SHAART">GitHub repository</a> <br>
 <br>
 
+<a name="tutorial"><h2>Tutorial(s)</h2></a>
+<ul>
+  <li><a href="ir.html">Creating Impulse Responses with SHAART</a>
+</ul>
 
 <a name="notes"><h2>Release Notes/Issues</h2></a>
 <ul>
+ <li>v0.5:  
+    <ul> <li>Got its own App icon!  
+         <li>"Power": Improved power spectrum calculation and display.  
+          <li>"Equation": Added equation for inverse exp. sine sweep (with "depinking").
+         <li>Added IR creation tutorial (documentation)
+     </ul>
  <li>Despite saying WAV file everywhere, the newest version of SHAART will read AIFF files too.  And the previous issue with 24-bit PCM WAV files has been resolved.</li>
 <li> You don't need a WAV file to use the room mode calculator or the Sabine calculator.  </li>
 <li> No you can't get a logarithmic frequency scale for the spectrogram.  Not yet.</li>
@@ -93,7 +104,7 @@ And here's an interesting one: a "leveler" effect turns Lena into a vampire:<br>
 <b>Running SHAART.py from source, via Python and MacPorts:</b><br>
 First, we'll assume you have already <a href="https://www.macports.org/install.php">installed MacPorts</a>. (Hint: To get the XCode Command Line Tools without creating an Apple Developer account, after you install Xcode, go into a terminal shell and run "xcode-select --install".  Voila!)<br>
 Then make sure you have all the ports/packages you need:<br>
-"sudo port install py27-numpy py27-scipy py27-matplotlib py27-pil py27-pyqt4 py27-pyaudio libsndfile; sudo easy_install-2.7 scikits.audiolab "<br>
+"sudo port install py27-numpy py27-scipy py27-matplotlib py27-pil py27-pyqt4 py27-pyaudio py27-scikits-samplerate libsndfile; sudo easy_install-2.7 scikits.audiolab "<br>
 Then don't forget to run python select:<br>
 "sudo port select python python27"<br>
 Then you should be good to go!  Just "tar xvfz SHAART.tar.gz", then "cd SHAART".<br> 

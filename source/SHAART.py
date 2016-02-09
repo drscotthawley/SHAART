@@ -27,6 +27,7 @@ from matplotlib.backends.backend_qt4 import NavigationToolbar2QT as NavigationTo
 import re
 import Image
 from scipy import zeros, ifft
+#import librosa.core as librosa_core
 
 import pyaudio
 import time
@@ -271,6 +272,14 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         self.modesTextEdit.setPlainText(outstring)
         self.modegraph.update_graph(modes,x,y,z)
 
+    def tojas_isft(self, X, fs, T, hop):
+       x = scipy.zeros(T*fs)
+       framesamp = X.shape[1]
+       hopsamp = int(hop*fs)
+       for n,i in enumerate(range(0, len(x)-framesamp, hopsamp)):
+           x[i:i+framesamp] += scipy.real(scipy.ifft(X[n]))
+       return x
+
 
     def my_istft(self, X, fs, T):
         # Inverse Short-Time Fourier Transform, i.e. "Inverse Spectrogram"
@@ -302,13 +311,14 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         
         # around each hop, we put a frame, centered on the hop, but wider by buf on each side
         samples_per_frame = samples_per_hop + 2*ibuf
+        n = samples_per_frame
         
         for ihop in range(nhops):
-            b = np.array(ifft(X[ihop], n=samples_per_frame))
-            framedata = np.imag(b)     # i actually find that imag() gives better image results than real() 
+            b = np.array(ifft(X[ihop], n = n))    # b is a 'vertical' set of pixels
+            framedata = np.imag(b)     # I actually find that imag() gives better image results than real() 
             ibgn = ibuf +  samples_per_hop/2 +  ihop*samples_per_hop - samples_per_frame/2
-            iend = ibgn + samples_per_frame
-            x[ibgn:iend] += framedata
+            iend = ibgn + n-1
+            x[ibgn:iend] += framedata[0:n-1]
         
         y = x[ibuf:-ibuf]  # chop off the buffers
         return y
@@ -318,10 +328,15 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         wav_filename = str( self.is_wavname_lineEdit.text() )
         dur_str = str( self.is_duration_lineEdit.text() )
         rate_str = str( self.is_rate_lineEdit.text() )
-        if (im_filename=="") | (wav_filename=="") | (dur_str=="") | (rate_str==""): return
+        minf_str = str( self.is_minf_lineEdit.text() )
+        maxf_str = str( self.is_maxf_lineEdit.text() )
+        
+        if (im_filename=="") | (wav_filename=="") | (dur_str=="") | (rate_str=="") |(minf_str=="") | (maxf_str=="") : return
 
         rate = int( rate_str )
         image_duration = float( dur_str ) 
+        minfreq = float(minf_str)
+        maxfreq = float(maxf_str)
 
         pic = Image.open(im_filename).convert("LA")
         pic = pic.resize((512, 512), Image.ANTIALIAS)  # my_istft works 'best' with 512x512...
@@ -329,14 +344,16 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         image = np.array(image[:,0]).reshape(pic.size[1], pic.size[0])
 
 
-        # Construct the signal
+        # Construct the signal. Put the image into X, transpose & flip, take its inverse stft
         #---------------------
         X = 1.0*np.array(image)       # floating point values
         contrast_power = 1.5          # higher = more contrast, but also introduces more distortion
         X = (X)**contrast_power
         X = X.T  # transpose
         X = np.fliplr(X) # flip 
-        mysignal = self.my_istft(X, rate, image_duration)
+
+        mysignal = self.my_istft(X, rate, image_duration)    # my routine
+#        mysignal = librosa_core.istft(X.T)
 
 
         # normalize &  convert the signal to int
@@ -438,14 +455,30 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
            amp3 = amp[::-1]
            amp = amp3
 
-        # autocorrelation
-        if self.checkBox_autocorr.checkState():
+
+        
+
+        if self.checkBox_autocorr.checkState(): # autocorrelation
             print "Debug: autocorrelation is checked"
             amp3 = self.my_autocorr(amp)
-        elif (0 == nofileB):
+        elif (0 == nofileB):   # normal convolution
+
+
+           #TODO: make this a button
+           #print 'adding +3dB/octave filter...'
+           #fftamp = np.fft.rfft(amp,n=16384)
+           #fftamp = fftamp * range(len(fftamp))
+           #amp = np.fft.irfft(fftamp,n=16384)
+           #fftamp = np.fft.rfft(ampB,n=16384)
+           #fftamp = fftamp * range(len(fftamp))
+           #ampB = np.fft.irfft(fftamp,n=16384)
+
+
            print 'starting convolution...'
            amp3 = signal.fftconvolve( amp, ampB, mode="same") 
            print 'finished convolution...'
+
+
            maxval_3 = np.max(amp3)
            amp3 *= 0.9999999 / maxval_3
 

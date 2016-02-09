@@ -14,6 +14,7 @@ from matplotlib.backends.backend_qt4 import NavigationToolbar2QT as NavigationTo
 
 import numpy as np
 import scipy.signal as signal
+import scipy
 from os import path
 import re
 
@@ -88,21 +89,24 @@ class PwrSpecWidget(QtGui.QWidget):
            """Updates the graph with new data/annotations"""
 
            print "pwrspec: Computing dB, amplength = ",len(amp)
-           dB = 20*np.log10(np.abs(np.fft.rfft(amp,n=16384)))
+           #fftlength = 16384
+           #dB = 20.0*np.log10(np.abs(np.fft.rfft(amp,n=fftlength)))
+#           dB = 20 * scipy.log10(scipy.absolute(scipy.fft(amp)))
+           dB = 20.0*np.log10(np.abs(np.fft.rfft(amp)))   # this works the best
            print "pwrspec: finished Computing dB"
-           fftsamples = len(dB)
-           print "pwrspec computing f, fftsamples = ",fftsamples
-           f = np.linspace(0, samplerate/2.0, fftsamples)
+           graphsamples = len(dB)
+           print "pwrspec computing f, graphsamples = ",graphsamples
+           f = np.linspace(0, samplerate/2.0, graphsamples)
            print "pwrspec finished computing f"
 
-           if (fftsamples > 100000):
-                fftsamples = 4096
-           elif (fftsamples > 50000):
-                fftsamples = 2048
+           if (graphsamples > 100000):
+                graphsamples = 4096
+           elif (graphsamples > 50000):
+                graphsamples = 2048
            else:
-                fftsamples = 1024
-#           ds_dB,ds_f  = signal.resample(dB,fftsamples,f)
-           ds_f,ds_dB  = my_resample(f,dB,fftsamples)
+                graphsamples = 1024
+#           ds_dB,ds_f  = signal.resample(dB,graphsamples,f)
+           ds_f,ds_dB  = my_resample(f,dB,graphsamples)
 
            maxval = np.max(ds_dB)
            ds_dB = [ x - maxval for x in ds_dB]
