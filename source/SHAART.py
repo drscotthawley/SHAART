@@ -322,7 +322,47 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         
         y = x[ibuf:-ibuf]  # chop off the buffers
         return y
-        
+
+    def ekman_istft(self, X, fs, T, minfreq, maxfreq):
+        # This is based on Coagula by Rasmus Ekman: https://www.abc.se/~re/Coagula/Coagula.html
+        # In this method, we don't actually take an inverse STFT.
+        # Ekman: "How: Coagula uses one sinewave (beep) per image line, one short blip per point (pixel) on the line. "
+        #   X is the image, i.e. the STFT of the time series data to be produced (called 'x', below)
+        #   fs = sample rate, in samples/sec
+        #   T = duration, in secs
+        #   minfreq, maxfreq = min & max frequency (in Hz) in which to map image ("vertically")
+
+        nhops = X.shape[0]              # each pixel is a "hop"
+        hop_duration = T / nhops        # in secs
+        samples_per_hop = int(hop_duration * fs) 
+        nfreq = X.shape[1]
+        dfreq = (maxfreq - minfreq) / nfreq
+
+        print 'ekman: nhops, nfreq, dfreq = ',nhops, nfreq, dfreq
+
+        ibuf = 0  # no buffer
+        tbuf = 1.0 * ibuf / fs      # may seem redundant, but readable
+        x = zeros((T+2*tbuf)*fs)    # x is the time series data
+        for ihop in range(nhops):
+            for ifreq in range(nfreq):   #scan vertically upwards
+                freq = minfreq + ifreq * dfreq
+                intensity = X[ihop,ifreq]
+               # print '     ihop, freq, intensity = ',ihop,freq,intensity
+                # framedata will be a short sine wave which will get added to x
+                phase = 0.0
+#                phase = np.random.random_sample() * 3.14159/2
+#                phase = 3.14
+                framedata = intensity * np.sin( 2*3.14159*freq * np.arange(0,hop_duration,hop_duration/samples_per_hop) + phase )
+
+                ibgn = ibuf +  ihop*samples_per_hop 
+                iend = ibgn + samples_per_hop 
+                x[ibgn:iend] += framedata[0:iend-ibgn]
+          
+
+        y = x
+        return y
+
+    
     def img_to_wav(self):
         im_filename  = str( self.is_imname_lineEdit.text() )
         wav_filename = str( self.is_wavname_lineEdit.text() )
@@ -339,9 +379,11 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         maxfreq = float(maxf_str)
 
         pic = Image.open(im_filename).convert("LA")
-        pic = pic.resize((512, 512), Image.ANTIALIAS)  # my_istft works 'best' with 512x512...
+       # pic = pic.resize((512, 512), Image.ANTIALIAS)  # my_istft works 'best' with 512x512...
         image = np.array(pic.getdata())
         image = np.array(image[:,0]).reshape(pic.size[1], pic.size[0])
+
+        print 'image shape = ',image.shape
 
 
         # Construct the signal. Put the image into X, transpose & flip, take its inverse stft
@@ -352,8 +394,10 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         X = X.T  # transpose
         X = np.fliplr(X) # flip 
 
-        mysignal = self.my_istft(X, rate, image_duration)    # my routine
+        print 'X shape = ',X.shape
 #        mysignal = librosa_core.istft(X.T)
+#        mysignal = self.my_istft(X, rate, image_duration)    # conversion routine
+        mysignal = self.ekman_istft(X, rate, image_duration,minfreq,maxfreq)    # conversion routine
 
 
         # normalize &  convert the signal to int
@@ -391,7 +435,7 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         SRm1 = 1.0/SR
         sample_rate = SR
         NS = int( TMAX * sample_rate )
-        print 'TMAX, SR, NS = ',TMAX, SR, NS
+        print 'TMAX, SR, NS, SRm1 = ',TMAX, SR, NS, SRm1
 
         #allocate storage
         amp = np.zeros(NS,dtype=np.float64)
@@ -400,24 +444,33 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         eq_str = re.sub('sin','np.sin',eq_str)
         eq_str = re.sub('cos','np.cos',eq_str)
         eq_str = re.sub('tan','np.tan',eq_str)
+        eq_str = re.sub('arcnp.','np.arc',eq_str)
         eq_str = re.sub('sqrt','np.sqrt',eq_str)
         eq_str = re.sub('ln','np.log',eq_str)
         eq_str = re.sub('log10','np.log10',eq_str)
         eq_str = re.sub('abs','np.abs',eq_str)
         eq_str = re.sub('exp','np.exp',eq_str)
         eq_str = re.sub('PI','3.14159265358979323846',eq_str)
+        eq_str = re.sub('np.np.','np.',eq_str)
         
 
+        print 'eq_str = [',eq_str,']'
         # now create the sounds
         print 'Starting loop'
-        for i in range(NS):
-           t = i * SRm1
-           newstr = "amp[i]  = " + eq_str 
-           #print 'newstr = [',newstr,']'
-           exec newstr
-           #amp[i]  = 0.8 * np.sin( 20 *2*3.14159265358979323846*TMAX/np.log(20000.0/20) * (np.exp(t/TMAX*np.log(20000.0/20))-1) )
+        #for i in range(NS):    #---------------- the slow way
+        #   t = i * SRm1
+        #   newstr = "amp[i]  = " + eq_str 
+        #   exec newstr          #------------------end slow way
+
+        t = np.arange(0,TMAX, SRm1)
+        #print 't.shape, amp.shape, t[1] = ',t.shape,amp.shape,t[1]
+        newstr = "amp[0:t.shape[0]] = " + eq_str 
+        print 'newstr = [', newstr, ']'
+        exec newstr
 
         print 'Finished loop'
+        #print 't = ',t
+        #print 'amp = ',amp
 
         # Global settings for commucating with the rest of the program
         orig_amp = amp

@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_shaart.ui'
 #
-# Created: Mon Feb  8 16:30:10 2016
-#      by: PyQt4 UI code generator 4.11.2
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -126,7 +125,6 @@ class Ui_TheMainWindow(object):
         self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(0, 19, 861, 71))
         self.horizontalLayoutWidget_2.setObjectName(_fromUtf8("horizontalLayoutWidget_2"))
         self.horizontalLayout_35 = QtGui.QHBoxLayout(self.horizontalLayoutWidget_2)
-        self.horizontalLayout_35.setMargin(0)
         self.horizontalLayout_35.setObjectName(_fromUtf8("horizontalLayout_35"))
         self.radioButton_3 = QtGui.QRadioButton(self.horizontalLayoutWidget_2)
         font = QtGui.QFont()
@@ -156,7 +154,6 @@ class Ui_TheMainWindow(object):
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(0, 20, 861, 80))
         self.horizontalLayoutWidget.setObjectName(_fromUtf8("horizontalLayoutWidget"))
         self.horizontalLayout_33 = QtGui.QHBoxLayout(self.horizontalLayoutWidget)
-        self.horizontalLayout_33.setMargin(0)
         self.horizontalLayout_33.setObjectName(_fromUtf8("horizontalLayout_33"))
         self.radioButton = QtGui.QRadioButton(self.horizontalLayoutWidget)
         font = QtGui.QFont()
@@ -786,7 +783,6 @@ class Ui_TheMainWindow(object):
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\';\">NS = number of samples </span></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\';\">t = time (in seconds)</span></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\';\">TMAX = Duration ( = NS/SR )</span></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\';\">i = index (sample #, starting with 0) </span></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\';\">PI = 3.14159... </span></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\';\">ln() = Natural Log </span></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\';\">log10() = log base ten </span></p>\n"
@@ -803,7 +799,7 @@ class Ui_TheMainWindow(object):
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\';\">White Noise, Amplitude 0.5 =  0.5 * np.random.uniform(-1,1)</span></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Lucida Grande\';\"><br /></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\'; font-weight:600; font-style:italic;\">WARNING: This operation is slow.  You will likely see the \'spinning ball.\'  Be patient.</span></p></body></html>", None))
-        self.label_25.setText(_translate("TheMainWindow", "EQUATION: Sound[i] =", None))
+        self.label_25.setText(_translate("TheMainWindow", "EQUATION: Sound(t) =", None))
         self.equation_lineEdit.setText(_translate("TheMainWindow", "0.8 * sin( 20 *2*PI*TMAX/ln(20000.0/20) * (exp(t/TMAX*ln(20000.0/20))-1) )", None))
         self.eq_go_pushButton.setText(_translate("TheMainWindow", "GO!", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabEquation), _translate("TheMainWindow", "Equation", None))
@@ -831,8 +827,9 @@ class Ui_TheMainWindow(object):
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\'; font-size:20pt; font-weight:600;\">Places result in File A</span></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Lucida Grande\';\"><br /></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\'; font-size:16pt; font-weight:600;\">To construct an impulse response from a sine sweep:</span></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\'; font-size:16pt;\">Let File A = original test signal,  File B = recorded room response,</span></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\'; font-size:16pt;\"> and make sure &quot;Time Reverse File A&quot; is selected</span></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\'; font-size:16pt;\">Let File A = &quot;inverse&quot; of test sweep*,  File B = recorded room response</span></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Lucida Grande\'; font-size:16pt;\"><br /></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\'; font-size:16pt;\"> *see Equation tab for inverse sweep of exp.sine sweep.</span></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Lucida Grande\'; font-size:16pt;\"><br /></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Lucida Grande\'; font-size:16pt;\"><br /></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\'; font-size:16pt; font-weight:600;\">&quot;Remove First Half of Result&quot; is typically used both for:</span></p>\n"
@@ -976,10 +973,10 @@ class Ui_TheMainWindow(object):
         self.theactionSave.setText(_translate("TheMainWindow", "Save File A", None))
         self.theactionSave.setShortcut(_translate("TheMainWindow", "Ctrl+S", None))
 
+from modegraphwidget import ModeGraphWidget
+from pwrspecwidget import PwrSpecWidget
 from rcgraphwidget import RcGraphWidget
-from waveformwidget import WaveformWidget
 from rt60widget import Rt60Widget
 from spectrowidget import SpectroWidget
 from waterwidget import WaterWidget
-from pwrspecwidget import PwrSpecWidget
-from modegraphwidget import ModeGraphWidget
+from waveformwidget import WaveformWidget

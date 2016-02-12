@@ -52,6 +52,8 @@ Running from source requires python packages pyqt4, scipy, numpy, matplotlib,
 To modify the user interface: The interface was built on QT4 using the QT 
 Designer application, which reads & saves the file ui_shaart.ui:
 % Designer ui_shaart.ui 
+--> note: on MacPorts, Designer is no longer accessible from the command line,
+rather it is an app in /Applications/MacPorts/Designer.app
 
 This is then converted to a python script by running, e.g.,
 
@@ -78,11 +80,6 @@ List of files:
     setup.py          - used for py2app.  See above.
     shaart_logo.png   - one of the most horrifying graphic designs ever
 
-TODO/Future Work:   (write these yourself and submit them for inclusion!)
-================
-  - Read & plot multiple (i.e., at least 2) files simultaneously
-  - Theoretical graph of possible room response using mode calculation
-  - "Inverse Spectrograph": encode an image to a sound file
 
 
 SHAART. 
