@@ -1,6 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 # used to parse files more easily
 from __future__ import with_statement
+from __future__ import print_function
 
 # Numpy module
 import numpy as np
@@ -25,13 +26,14 @@ import pylab as pl
 #from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
 from matplotlib.backends.backend_qt4 import NavigationToolbar2QT as NavigationToolbar
 import re
-import Image
+from PIL import Image    #import Image   # cleaned this up
 from scipy import zeros, ifft
 #import librosa.core as librosa_core
 
 import pyaudio
 import time
 
+#import cython #  not used at ALL. only in here b/c of bug with py2app packaging
 
 #----------------- for filtering signals -----------------
 # from post by Warren Weckesser, http://tinyurl.com/d4cjs7m
@@ -338,7 +340,7 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         nfreq = X.shape[1]
         dfreq = (maxfreq - minfreq) / nfreq
 
-        print 'ekman: nhops, nfreq, dfreq = ',nhops, nfreq, dfreq
+        print('ekman: nhops, nfreq, dfreq = ',nhops, nfreq, dfreq)
 
         ibuf = 0  # no buffer
         tbuf = 1.0 * ibuf / fs      # may seem redundant, but readable
@@ -383,7 +385,7 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         image = np.array(pic.getdata())
         image = np.array(image[:,0]).reshape(pic.size[1], pic.size[0])
 
-        print 'image shape = ',image.shape
+        print('image shape = ',image.shape)
 
 
         # Construct the signal. Put the image into X, transpose & flip, take its inverse stft
@@ -394,7 +396,7 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         X = X.T  # transpose
         X = np.fliplr(X) # flip 
 
-        print 'X shape = ',X.shape
+        print('X shape = ',X.shape)
 #        mysignal = librosa_core.istft(X.T)
 #        mysignal = self.my_istft(X, rate, image_duration)    # conversion routine
         mysignal = self.ekman_istft(X, rate, image_duration,minfreq,maxfreq)    # conversion routine
@@ -435,7 +437,7 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         SRm1 = 1.0/SR
         sample_rate = SR
         NS = int( TMAX * sample_rate )
-        print 'TMAX, SR, NS, SRm1 = ',TMAX, SR, NS, SRm1
+        print('TMAX, SR, NS, SRm1 = ',TMAX, SR, NS, SRm1)
 
         #allocate storage
         amp = np.zeros(NS,dtype=np.float64)
@@ -454,9 +456,9 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         eq_str = re.sub('np.np.','np.',eq_str)
         
 
-        print 'eq_str = [',eq_str,']'
+        print('eq_str = [',eq_str,']')
         # now create the sounds
-        print 'Starting loop'
+        print('Starting loop')
         #for i in range(NS):    #---------------- the slow way
         #   t = i * SRm1
         #   newstr = "amp[i]  = " + eq_str 
@@ -465,10 +467,10 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         t = np.arange(0,TMAX, SRm1)
         #print 't.shape, amp.shape, t[1] = ',t.shape,amp.shape,t[1]
         newstr = "amp[0:t.shape[0]] = " + eq_str 
-        print 'newstr = [', newstr, ']'
-        exec newstr
+        print('newstr = [', newstr, ']')
+        exec(newstr)
 
-        print 'Finished loop'
+        print('Finished loop')
         #print 't = ',t
         #print 'amp = ',amp
 
@@ -501,7 +503,7 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         global nofile, nofileB
 
         if ((1==nofileB) and (False == self.checkBox_autocorr.checkState())):
-           print "convo_go: Unable to perform convolution"
+           print("convo_go: Unable to perform convolution")
            return
 
         if self.checkBox_timerev.checkState():
@@ -512,7 +514,7 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
         
 
         if self.checkBox_autocorr.checkState(): # autocorrelation
-            print "Debug: autocorrelation is checked"
+            print("Debug: autocorrelation is checked")
             amp3 = self.my_autocorr(amp)
         elif (0 == nofileB):   # normal convolution
 
@@ -527,9 +529,9 @@ class DesignerMainWindow(QtGui.QMainWindow, Ui_TheMainWindow):
            #ampB = np.fft.irfft(fftamp,n=16384)
 
 
-           print 'starting convolution...'
+           print('starting convolution...')
            amp3 = signal.fftconvolve( amp, ampB, mode="same") 
-           print 'finished convolution...'
+           print('finished convolution...')
 
 
            maxval_3 = np.max(amp3)

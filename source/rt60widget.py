@@ -24,7 +24,7 @@ def my_resample(x,newnum,y):
 
   if (0==method):
      if (len(y) != len(x)):
-         print "my_resample: Error: lengths of x and y are not equal!"
+         print("my_resample: Error: lengths of x and y are not equal!")
      # pad signal such that its length is a power of 2 = much faster
      orig_len = len(x)
      p2_len = math.pow(2, math.ceil(math.log(orig_len)/math.log(2)));
@@ -190,7 +190,7 @@ class Rt60Widget(QtGui.QWidget):
 
 
       def update_graph(self,amp,t,filenameA,ampB,tB, filenameB):
-        print "in rt60's update_graph:  filenameA = %s" % filenameA
+        print("in rt60's update_graph:  filenameA = %s" % filenameA)
         """Updates the graph with new data/annotations"""
         #fig = pl.figure()
         #ax = fig.add_subplot(111)

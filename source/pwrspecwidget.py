@@ -88,16 +88,16 @@ class PwrSpecWidget(QtGui.QWidget):
       def draw_graph(self,amp,samplerate,color="red"):
            """Updates the graph with new data/annotations"""
 
-           print "pwrspec: Computing dB, amplength = ",len(amp)
+           print("pwrspec: Computing dB, amplength = ",len(amp))
            #fftlength = 16384
            #dB = 20.0*np.log10(np.abs(np.fft.rfft(amp,n=fftlength)))
 #           dB = 20 * scipy.log10(scipy.absolute(scipy.fft(amp)))
            dB = 20.0*np.log10(np.abs(np.fft.rfft(amp)))   # this works the best
-           print "pwrspec: finished Computing dB"
+           print("pwrspec: finished Computing dB")
            graphsamples = len(dB)
-           print "pwrspec computing f, graphsamples = ",graphsamples
+           print("pwrspec computing f, graphsamples = ",graphsamples)
            f = np.linspace(0, samplerate/2.0, graphsamples)
-           print "pwrspec finished computing f"
+           print("pwrspec finished computing f")
 
            if (graphsamples > 100000):
                 graphsamples = 4096
@@ -105,6 +105,7 @@ class PwrSpecWidget(QtGui.QWidget):
                 graphsamples = 2048
            else:
                 graphsamples = 1024
+           graphsamples = len(dB)   #todo remove this
 #           ds_dB,ds_f  = signal.resample(dB,graphsamples,f)
            ds_f,ds_dB  = my_resample(f,dB,graphsamples)
 
@@ -124,13 +125,13 @@ class PwrSpecWidget(QtGui.QWidget):
            self.canvas.ax.set_xlabel('Frequency (Hz)')
            self.canvas.ax.set_ylabel('Power (dB) ')
   
-           print "leaving draw_graph"
+           print("leaving draw_graph")
 
            return p
 
 
       def update_graph(self,amp,samplerate,filenameA,ampB,samplerateB,filenameB):
-           print "starting update_graph"
+           print("starting update_graph")
            self.canvas.ax.clear()
            p1, = self.draw_graph(amp,samplerate,"blue")
            leg_fA = self.legend_string(filenameA)
@@ -146,6 +147,6 @@ class PwrSpecWidget(QtGui.QWidget):
            
            # Actually draw everything
            self.canvas.draw()
-           print "leaving update_graph"
+           print("leaving update_graph")
   
 
