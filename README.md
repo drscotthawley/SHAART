@@ -1,5 +1,4 @@
 <head>
-<title>SHAART Acoustics Tools</title>
 <link rel="SHORTCUT ICON" href="shaart_logo.jpg" />
 <link rel="image_src" href="http://hedges.belmont.edu/~shawley/SHAART/shaart_logo.jpg" />
 <meta property="og:image" content="http://hedges.belmont.edu/~shawley/SHAART/shaart_logo.jpg" />
