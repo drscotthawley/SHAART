@@ -1,23 +1,22 @@
-
 <head>
+<title>SHAART Acoustics Tools</title>
 <link rel="SHORTCUT ICON" href="shaart_logo.jpg" />
 <link rel="image_src" href="http://hedges.belmont.edu/~shawley/SHAART/shaart_logo.jpg" />
 <meta property="og:image" content="http://hedges.belmont.edu/~shawley/SHAART/shaart_logo.jpg" />
 <meta property="og:url" content="http://hedges.belmont.edu/~shawley/SHAART" />
 <meta property="og:title" content="SHAART Acoustic Tools" />
-
-<meta keywords="">
-
-
-
+<meta property="og:image" content="http://hedges.belmont.edu/~shawley/SHAART/screenshots/rt60.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://hedges.belmont.edu/~shawley/SHAART/screenshots/rt60.jpg">
+<meta keywords="audio acoustics analysis python education">
 </head>
 <body>
+
 # SHAART Acoustic Tools
 
 Main web page: http://hedges.belmont.edu/~shawley/SHAART/index.html
 
 <p align="center">
-<cente>
 SHAART Acoustic Tools, v 0.7<br>
 (April 5, 2020)<br>
 <img src="http://hedges.belmont.edu/~shawley/SHAART/shaart_logo.jpg"><br>
@@ -174,17 +173,18 @@ Author: <a href="http://www.scotthawley.com">Scott Hawley</a>
 * Do I always need an audio file?  No. You don't need a WAV file to use the room mode calculator or the Sabine calculator.
 * Can I get a logarithmic frequency scale for the spectrogram?  Not yet.
 * For waterfall plots, it doesn't clear the window if you change the input data, resulting in multiple plots on the same page.  Bug or feature?
-* Does the "Record" feature work?  Not yet. 
-* How do I contribute to SHAART?  Submit a Pull Request! 
+* Does the "Record" feature work?  Not yet.
+* How do I contribute to SHAART?  Submit a Pull Request!
 
 <a name="notes"></a>
 
 ## Release Notes / Issues
 * v0.7:
-   o Updated code from Python 2.7 to Python 3.7
-   o Updated GUI from Qt4 to Qt5
-   o Added capability for Windows & Linux executable builds
-   
+
+   * Updated code from Python 2.7 to Python 3.7
+   * Updated GUI from Qt4 to Qt5
+   * Added capability for Windows & Linux executable builds
+
 * v0.6: Minor improvements to speed and reliability
 
 * v0.5:  
