@@ -1,5 +1,5 @@
 # Python Qt4 bindings for GUI objects
-from PyQt4 import QtGui
+from PyQt5 import QtGui, QtWidgets
 
 # import the Qt4Agg FigureCanvas object, that binds Figure to
 # Qt4Agg backend. It also inherits from QWidget
@@ -27,15 +27,16 @@ def my_resample(x,newnum,y):
          print("my_resample: Error: lengths of x and y are not equal!")
      # pad signal such that its length is a power of 2 = much faster
      orig_len = len(x)
-     p2_len = math.pow(2, math.ceil(math.log(orig_len)/math.log(2)));
+     p2_len = int(math.pow(2, math.ceil(math.log(orig_len)/math.log(2))))
      x3 = np.zeros(p2_len)
      y3 = np.zeros(p2_len)
      x3[0:orig_len-1] = x[0:orig_len-1]
      y3[0:orig_len-1] = y[0:orig_len-1]
-     x2, y2  = signal.resample(x3,newnum*p2_len/orig_len,y3)
+     x2, y2  = signal.resample(x3,newnum*p2_len//orig_len,y3)
      x2 = x2[0:newnum-1]
      y2 = y2[0:newnum-1]
   else:
+     newnum = int(newnum)
      num = len(x)
      stride = int(num / newnum)
      x2 = np.zeros(newnum)
@@ -65,22 +66,22 @@ class Rt60Canvas(FigureCanvas):
 
            # we define the widget as expandable
            FigureCanvas.setSizePolicy(self,
-                                      QtGui.QSizePolicy.Expanding,
-                                      QtGui.QSizePolicy.Expanding)
+                                      QtWidgets.QSizePolicy.Expanding,
+                                      QtWidgets.QSizePolicy.Expanding)
            # notify the system of updated policy
            FigureCanvas.updateGeometry(self)
 
-class Rt60Widget(QtGui.QWidget):
+class Rt60Widget(QtWidgets.QWidget):
       """Widget defined in Qt Designer"""
       def __init__(self, parent = None):
            # initialization of Qt MainWindow widget
-           QtGui.QWidget.__init__(self, parent)
+           QtWidgets.QWidget.__init__(self, parent)
 
            # set the canvas to the Matplotlib widget
            self.canvas = Rt60Canvas()
 
            # create a vertical box layout
-           self.vbl = QtGui.QVBoxLayout()
+           self.vbl = QtWidgets.QVBoxLayout()
 
            # add rt60 widget to vertical box
            self.vbl.addWidget(self.canvas)

@@ -1,5 +1,5 @@
 # Python Qt4 bindings for GUI objects
-from PyQt4 import QtGui
+from PyQt5 import QtGui, QtWidgets
 
 # import the Qt4Agg FigureCanvas object, that binds Figure to
 # Qt4Agg backend. It also inherits from QWidget
@@ -15,7 +15,7 @@ import matplotlib.mlab as mlab
 import numpy as np
 from mpl_toolkits.mplot3d import axes3d
 
-from scipy.misc import imresize
+#from scipy.misc import imresize
 from scipy import ndimage
 
 
@@ -33,22 +33,22 @@ class WaterCanvas(FigureCanvas):
 
            # we define the widget as expandable
            FigureCanvas.setSizePolicy(self,
-                                      QtGui.QSizePolicy.Expanding,
-                                      QtGui.QSizePolicy.Expanding)
+                                      QtWidgets.QSizePolicy.Expanding,
+                                      QtWidgets.QSizePolicy.Expanding)
            # notify the system of updated policy
            FigureCanvas.updateGeometry(self)
 
-class WaterWidget(QtGui.QWidget):
+class WaterWidget(QtWidgets.QWidget):
       """Widget defined in Qt Designer"""
       def __init__(self, parent = None):
            # initialization of Qt MainWindow widget
-           QtGui.QWidget.__init__(self, parent)
+           QtWidgets.QWidget.__init__(self, parent)
 
            # set the canvas to the Matplotlib widget
            self.canvas = WaterCanvas()
 
            # create a vertical box layout
-           self.vbl = QtGui.QVBoxLayout()
+           self.vbl = QtWidgets.QVBoxLayout()
 
            # add water widget to vertical box
            self.vbl.addWidget(self.canvas)
@@ -76,7 +76,7 @@ class WaterWidget(QtGui.QWidget):
            X,Y = np.meshgrid(x,y)
            Z = 10.0*np.log10(image)                       # log scale for intensity
            maxval = np.max(Z)
-           Z = [ x - maxval for x in Z]                   # normalize to zero dB
+           Z = np.array([ x - maxval for x in Z])                   # normalize to zero dB
            #print "X.shape = ", X.shape, ", Y.shape = ", Y.shape #, ", Z.shape = ", Z.shape
 
            """A form of downsampling: set the 'stride' when plotting, for cris-crossy lines"""
@@ -85,7 +85,6 @@ class WaterWidget(QtGui.QWidget):
            maxn = 1000  # say we can reasonably handle a maxn values, beyond that, we reduce
            if X.shape[1] > maxn:  cstride = 10* X.shape[1] / maxn
            #print "rstride, cstride = ",rstride,cstride
-           
           # self.canvas.ax.plot_surface(X,Y,Z,rstride=rstride, cstride=cstride, alpha=1.0, cmap=cm.Blues)
            self.canvas.ax.plot_surface(X,Y,Z,rstride=rstride, cstride=cstride, cmap=cm.Blues)
 
