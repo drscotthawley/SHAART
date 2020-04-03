@@ -21,27 +21,46 @@ SHAART Acoustic Tools, v 0.7<br>
 <img src="http://hedges.belmont.edu/~shawley/SHAART/shaart_logo.jpg"><br>
 (yes, the name is a joke)<br>
 <a href="#about">About</a> &nbsp;&nbsp;
+<a href="#features">Features</a> &nbsp;&nbsp;
 <a href="#downloads">Downloads</a> &nbsp;&nbsp;
 <a href="#license">License</a> &nbsp;&nbsp;
-<a href="#screenshots">Screenshots</a> &nbsp;&nbsp;
-<a href="#source">Running From Source</a> <br>
+<a href="#screenshots">Screenshots</a> &nbsp;&nbsp;<br>
+<a href="#source">Running From Source</a>  &nbsp;&nbsp;
 <a href="#tutorial">Tutorial(s)</a> &nbsp;&nbsp;
 <a href="#faq">FAQ</a> &nbsp;&nbsp;
 <a href="#notes">Release Notes</a> &nbsp;&nbsp;
 <br><br>
 </p>
 
+
 <a name="about"></a>
 
 ## About
 
 This lightweight audio analysis suite was initially written <b><i>for educational purposes only</i></b>
-over a period of 4 days.  (And then improved in bits.)<br>
-It's amazing how much you can accomplish with minimal knowledge of Python programming.<br>
-<br>
-The name "SHAART" uses the author's initials (S.H.) in homage to the famous "SMAART" set of acoustics analysis tools.<br>
-That and "SHAART" is just hilarious to say, for other reasons. <br>
-<i>(Note: "homage" = parody, derivative work = fair use = please don't sue.)</i><br>
+over a period of 4 days.  (And then improved in bits.)  It's amazing how much you can accomplish with minimal knowledge of Python programming!
+
+The name "SHAART" uses the author's initials (S.H.) in homage to the famous "SMAART" set of acoustics analysis tools.  That and "SHAART" is just hilarious to say, for other reasons.  *(Note: "homage" = parody, derivative work = fair use = please don't sue.)*
+
+
+
+<a name="features"></a>
+
+## Features 
+
+Most of these features are illustrated in the <a href="#screenshots">Screenshots</a> section further down this page. 
+
+* **RT60 Measurement:** The reason SHAART was written in the first place.  Load an audio file, filter in different octave bands, draw a "best fit" line on the graph by hand, read off the reverb time.   (This was originally the only feature of SHAART, designed to mimic SMAART Acoustics Tools(tm).)  Can show two files ("File A" and "File B") at once.  See "Tutorial(s)" below for a demo.
+* **Waveform Display:** Linear scale only.  Displays two waveforms ("File A" and "File B") at once.
+* **Power Spectrum:** Pretty standard.  Doesn't do a log scale yet, though I'd like to add that.  Displays two spectra ("File A" and "File B" at once.)
+* **Spectrogram:** as with Power Spectrum.  Offers a few colormaps. 
+* **Waterfall Plot:**  Alternative to Spectrogram, shows magnitude surface a function of time & frequency. 
+* **Image-To-Audio:**  Import an image, output audio for which the spectrogram will resemble that image.  Sounds a little "phasey," could be cleaner.  Useful for demonstrating audio effects.  See "Screenshots," below.
+* **Room Mode Calculator:**  Just uses the Rayleigh equation for standing waves of a 3D box, and also plots a "Fake Room Response" by assigning relative amplitudes to axial, tangential, and oblique modes.  Useful for demonstrating mode distributions for different room shapes. 
+* **Equation-to-Audio:** Specify a time-dependent function, and it'll generate audio from that. Useful for sine sweeps, e.g. for building impulse responses using Convolution (below)
+* **Convolution:** Convolve File A with File B.  Useful for making impulse responses from sine sweeps, or just for screwing around (e.g. convolving Led Zeppelin's "The Ocean" with the sound of a dog bark.)
+
+
 
 <a name="downloads"></a>
 
@@ -77,6 +96,8 @@ That and "SHAART" is just hilarious to say, for other reasons. <br>
 *  **TODO:** Measuring Reverb times with SHAART
 
 * [Creating Impulse Responses with SHAART](ir.html)
+
+
 
 <a name="screenshots"></a>
 
@@ -131,7 +152,10 @@ conda install pyqt pillow pyaudio
 python SHAART.py
 ```
 
+
+
 ## Building an Executable
+
 First follow the instructions above for running from source.  Then install an app-building app.  
 For Mac, we use `py2app`, whereas for Linux and Windows we'll use `pyinstaller`.  
 Each of these methods will create a new directory called `SHAART/source/dist/`, **in which a successful build will result in the presence of working binary executable.**
