@@ -50,7 +50,8 @@ That and "SHAART" is just hilarious to say, for other reasons. <br>
 * [Mac Binary Application](https://hedges.belmont.edu/~shawley/SHAART/SHAART.app.tar.gz) (105 MB)
 
 *  [Windows Executable](https://drive.google.com/file/d/1F2ljmx9K1xb1S2RXX4YLEqViVLCqWzV2/view?usp=sharing) (380 MB)
-* [Source code](https://hedges.belmont.edu/~shawley/SHAART/SHAART.tar.gz) (in Python)  See "Running from Source" below for further instructions.
+* Linux executable doesn't work yet, but you can <a href="#source">run from source</a> (below)
+* [Source code](https://hedges.belmont.edu/~shawley/SHAART/SHAART.tar.gz) (in Python)  See <a href="#source">Running From Source</a> below for further instructions.
 * [Sample WAV file](https://hedges.belmont.edu/~shawley/SHAART/sample_data.wav)
 
 
@@ -118,7 +119,7 @@ And here's an interesting one: a "leveler" effect:<br>
 
 ## Running from Source
 <b>Running SHAART.py from source:</b><br>
-Create a new [Anaconda] Python environment and install dependencies...
+Create a new [Anaconda](https://www.anaconda.com/) Python environment and install dependencies...
 
 ```bash
 cd SHAART/source
@@ -135,28 +136,35 @@ First follow the instructions above for running from source.  Then install an ap
 For Mac, we use `py2app`, whereas for Linux and Windows we'll use `pyinstaller`.  
 Each of these methods will create a new directory called `SHAART/source/dist/`, in which a successful build will result in the presence of working binary executable.
 
+
+### Mac 
+In order to run from source, you'd already need to have XCode, the command-line tools, and HomeBrew installed. Then in we add py2app
+
+```bash
+conda install py2app
+python setup.py py2app
+```
+
+### Windows & Linux
+
 A few notes on PyInstaller:
 
    1. The `conda` version of `pyinstaller` is old (v3.5); to get the new one (v3.6) we need to use `pip` instead: `$ pip install pyinstaller`
       2. It produces a seemingly huge (380 MB) executable, whereas py2app is more compact.
       3. The pyinstaller-generated executable takes a long time to load up when you try to run it.
 
-### Linux (Ubuntu / Pop!\_OS)
+#### Windows (10)
+Install the Windows SDK, and also install `pywin32` and `pypiwin32`, and we need to list a bunch of other stuff when we run pyinstaller:
+
+**TODO:** add more Windows build instructions.
+
+
+#### Linux (Ubuntu / Pop!\_OS)
+Doesn't work yet, but you can <a href="#source">run from source</a> (above).
 ```bash
 pyinstaller -w --onefile --hidden-import="librosa" SHAART.py
 ```
-
-### Windows (10)
-Install the Windows SDK, and also install `pywin32` and `pypiwin32`, and we need to list a bunch of other stuff when we run pyinstaller:
-
-**TODO:** add more Windows instructions.
-
-### Mac
-You need to have XCode and the command-line tools installed, and HomeBrew as well.
-
-```bash
-python setup.py py2app
-```
+...unfortunately that gives an error about not finding librosa.  Working on it.
 
 <hr>
 Author: <a href="http://www.scotthawley.com">Scott Hawley</a>
