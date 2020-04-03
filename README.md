@@ -49,7 +49,7 @@ That and "SHAART" is just hilarious to say, for other reasons. <br>
 
 * [Mac Binary Application](https://hedges.belmont.edu/~shawley/SHAART/SHAART.app.tar.gz) (105 MB)
 
-*  [Windows Executable](https://drive.google.com/file/d/1F2ljmx9K1xb1S2RXX4YLEqViVLCqWzV2/view?usp=sharing) (380 MB)
+*  [Windows Executable](https://drive.google.com/file/d/1F2ljmx9K1xb1S2RXX4YLEqViVLCqWzV2/view?usp=sharing) (380 MB). Note that the Windows EXE takes *a while* to come up when you first run it.
 * Linux executable doesn't work yet, but you can <a href="#source">run from source</a> (below)
 * [Source code](https://hedges.belmont.edu/~shawley/SHAART/SHAART.tar.gz) (in Python)  See <a href="#source">Running From Source</a> below for further instructions.
 * [Sample WAV file](https://hedges.belmont.edu/~shawley/SHAART/sample_data.wav)
@@ -72,17 +72,17 @@ That and "SHAART" is just hilarious to say, for other reasons. <br>
 
 * **How to use the App:**  Go up to the "File" tab and select a WAV file to analyze.
 
-  Note: You don't need a WAV file to use the room mode calculator.  
+  Note: You don't need a WAV file to use the room mode calculator.
+
+*  **TODO:** Measuring Reverb times with SHAART
 
 * [Creating Impulse Responses with SHAART](ir.html)
-
-* ...TODO: add more later, e.g. measuring reverb times.
-
-
 
 <a name="screenshots"></a>
 
 ## Screenshots
+
+**TODO:** update screenshots with new QT5 version & show all tabs
 
 <img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/rt60.jpg" width=600><br>
 <br>
@@ -134,7 +134,7 @@ python SHAART.py
 ## Building an Executable
 First follow the instructions above for running from source.  Then install an app-building app.  
 For Mac, we use `py2app`, whereas for Linux and Windows we'll use `pyinstaller`.  
-Each of these methods will create a new directory called `SHAART/source/dist/`, in which a successful build will result in the presence of working binary executable.
+Each of these methods will create a new directory called `SHAART/source/dist/`, **in which a successful build will result in the presence of working binary executable.**
 
 
 ### Mac 
@@ -149,14 +149,33 @@ python setup.py py2app
 
 A few notes on PyInstaller:
 
-   1. The `conda` version of `pyinstaller` is old (v3.5); to get the new one (v3.6) we need to use `pip` instead: `$ pip install pyinstaller`
-      2. It produces a seemingly huge (380 MB) executable, whereas py2app is more compact.
-      3. The pyinstaller-generated executable takes a long time to load up when you try to run it.
+      1. The `conda` version of `pyinstaller` is old (v3.5); to get the new one (v3.6) we need to use `pip` instead: `$ pip install pyinstaller`
+   2. It produces a seemingly huge (380 MB) executable, whereas py2app is more compact.
+   3. The pyinstaller-generated executable takes a long time to load up when you try to run it.
 
 #### Windows (10)
-Install the Windows SDK, and also install `pywin32` and `pypiwin32`, and we need to list a bunch of other stuff when we run pyinstaller:
+Here are the steps taken to build the Window EXE:
 
-**TODO:** add more Windows build instructions.
+1. Download & Install Windows SDK: https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk/
+
+2. Download & Install Anaconda (64 bit):  https://www.anaconda.com/
+
+3. Run Anaconda Powershell prompt and install requirements:
+
+   ```bash
+   conda install -c conda-forge pyinstaller ffmpeg
+   conda install -c anaconda pyqt pywin32 pypiwin32
+   conda install pyaudio librosa pywintypes 
+   ```
+
+5. Downgrade `setuptools` to avoid conflicts `pyinstaller` as per https://github.com/pypa/setuptools/issues/1963: 
+   `pip install --upgrade 'setuptools<45.0.0'`
+
+6. Run `pyinstaller` with these arguments:
+
+   ```bash
+   pyinstaller -w --icon=shaart_logo_icon.ico  --hidden-import="pypiwin32" --hidden-import="pywintypes" --hidden-import="sklearn.utils._cython_blas" --hidden-import="sklearn.neighbors._typedefs" --hidden-import="sklearn.neighbors.quad_tree" --hidden-import="sklearn.tree._utils" --onefile SHAART.py
+   ```
 
 
 #### Linux (Ubuntu / Pop!\_OS)
