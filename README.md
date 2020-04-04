@@ -50,13 +50,14 @@ The name "SHAART" uses the author's initials (S.H.) in homage to the famous "SMA
 
 Most of these features are illustrated in the <a href="#screenshots">Screenshots</a> section further down this page. 
 
-* **RT60 Measurement:** The reason SHAART was written in the first place.  Load an audio file, filter in different octave bands, draw a "best fit" line on the graph by hand, read off the reverb time.   (This was originally the only feature of SHAART, designed to mimic SMAART Acoustics Tools(tm).)  Can show two files ("File A" and "File B") at once.  See "Tutorial(s)" below for a demo.
+* **RT60 Measurement:** The reason SHAART was written in the first place.  Load an audio file, filter in different octave bands, draw a "best fit" line on the graph by hand, read off the reverb time.  (Designed to mimic functionality of SMAART Acoustics Tools(tm).)  Can show two files ("File A" and "File B") at once.  See "Tutorial(s)" below for a demo.
 * **Waveform Display:** Linear scale only.  Displays two waveforms ("File A" and "File B") at once.
-* **Power Spectrum:** Pretty standard.  Doesn't do a log scale yet, though I'd like to add that.  Displays two spectra ("File A" and "File B" at once.)
-* **Spectrogram:** as with Power Spectrum.  Offers a few colormaps. 
-* **Waterfall Plot:**  Alternative to Spectrogram, shows magnitude surface a function of time & frequency. 
-* **Image-To-Audio:**  Import an image, output audio for which the spectrogram will resemble that image.  Sounds a little "phasey," could be cleaner.  Useful for demonstrating audio effects.  See "Screenshots," below.
-* **Room Mode Calculator:**  Just uses the Rayleigh equation for standing waves of a 3D box, and also plots a "Fake Room Response" by assigning relative amplitudes to axial, tangential, and oblique modes.  Useful for demonstrating mode distributions for different room shapes. 
+* **Power Spectrum:** Pretty standard display Doesn't do a log scale yet, though I'd like to add that.  Displays two spectra ("File A" and "File B" at once.)
+* **Spectrogram:**  Shows magnitude as color, vs frequency and time. as with Power Spectrum.  Offers a few colormaps.  No log freq scale yet.  Only one file ("File A") shown.
+* **Waterfall Plot:**  Alternative to Spectrogram, shows magnitude surface a function of time & frequency.   No log freq scale yet.  Only one file ("File A") shown.
+* **Image-To-Audio:**  Import an image, output audio for which the spectrogram will resemble that image.  Sounds a little "phasey," could be cleaner.  Useful for demonstrating audio effects visually!  See "Screenshots," below.
+* **Room Mode Calculator:**  Uses the Rayleigh equation for standing waves of a 3D box, and also plots a "Fake Room Response" by assigning relative amplitudes to axial, tangential, and oblique modes.  Useful for demonstrating mode distributions for different room shapes. 
+* **Sabine Equation Calculator:** Assumes a box-shaped room, lets you apply absorption to different surfaces.  Based on Chapter 8 of Berg & Stork textbook, including their table for absorption coefficients.
 * **Equation-to-Audio:** Specify a time-dependent function, and it'll generate audio from that. Useful for sine sweeps, e.g. for building impulse responses using Convolution (below)
 * **Convolution:** Convolve File A with File B.  Useful for making impulse responses from sine sweeps, or just for screwing around (e.g. convolving Led Zeppelin's "The Ocean" with the sound of a dog bark.)
 
@@ -66,10 +67,10 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 
 ## Downloads
 
-* [Mac Binary Application](https://hedges.belmont.edu/~shawley/SHAART/SHAART.app.tar.gz) (105 MB)
+* [Mac Binary application](https://hedges.belmont.edu/~shawley/SHAART/SHAART.app.tar.gz) (105 MB)
 
-*  [Windows Executable](https://drive.google.com/file/d/1F2ljmx9K1xb1S2RXX4YLEqViVLCqWzV2/view?usp=sharing) (380 MB). Note that the Windows EXE takes *a while* to come up when you first run it.
-* Linux executable doesn't work yet, but you can <a href="#source">run from source</a> (below)
+*  [Windows executable](https://drive.google.com/file/d/1F2ljmx9K1xb1S2RXX4YLEqViVLCqWzV2/view?usp=sharing) (380 MB). Note that the Windows EXE takes *a while* to come up when you first run it.
+* [Linux executable](https://drive.google.com/file/d/1uE_1x8ZCXI1bpQY5EamCEqUT2PUCLzYg/view?usp=sharing) (132 MB, Pop!\_OS / Ubuntu).  You can also <a href="#source">run from source</a> (below)
 * [Source code](https://hedges.belmont.edu/~shawley/SHAART/SHAART.tar.gz) (in Python)  See <a href="#source">Running From Source</a> below for further instructions.
 * [Sample WAV file](https://hedges.belmont.edu/~shawley/SHAART/sample_data.wav)
 
@@ -171,11 +172,13 @@ python setup.py py2app
 
 ### Windows & Linux
 
-A few notes on PyInstaller:
+Install PyInstaller: 
 
-      1. The `conda` version of `pyinstaller` is old (v3.5); to get the new one (v3.6) we need to use `pip` instead: `$ pip install pyinstaller`
-   2. It produces a seemingly huge (380 MB) executable, whereas py2app is more compact.
-   3. The pyinstaller-generated executable takes a long time to load up when you try to run it.
+```bash
+conda install -c conda-forge pyinstaller
+```
+
+One note on PyInstaller: The pyinstaller-generated executable takes a long time to load up when you try to run it.
 
 #### Windows (10)
 Here are the steps taken to build the Window EXE:
@@ -187,7 +190,7 @@ Here are the steps taken to build the Window EXE:
 3. Run Anaconda Powershell prompt and install requirements:
 
    ```bash
-   conda install -c conda-forge pyinstaller ffmpeg
+   conda install -c conda-forge ffmpeg
    conda install -c anaconda pyqt pywin32 pypiwin32
    conda install pyaudio librosa pywintypes 
    ```
@@ -201,18 +204,34 @@ Here are the steps taken to build the Window EXE:
    pyinstaller -w --icon=shaart_logo_icon.ico  --hidden-import="pypiwin32" --hidden-import="pywintypes" --hidden-import="sklearn.utils._cython_blas" --hidden-import="sklearn.neighbors._typedefs" --hidden-import="sklearn.neighbors.quad_tree" --hidden-import="sklearn.tree._utils" --onefile SHAART.py
    ```
 
-
 #### Linux (Ubuntu / Pop!\_OS)
-Doesn't work yet, but you can <a href="#source">run from source</a> (above).
+
+For Linux, all dependencies are the in "spec" file, so you can just run...
+
 ```bash
-pyinstaller -w --onefile --hidden-import="librosa" SHAART.py
+pyinstaller SHAART.spec --specpath=test
 ```
-...unfortunately that gives an error about not finding librosa.  Working on it.
+...builds it.  And then you can just run the `dist/SHAART` executable from the command line.   Note: I can't seem to get it to be a "clickable icon" in Nautilus/Gnome.  Not sure how to do that. 
 
 <hr>
-Author: <a href="http://www.scotthawley.com">Scott Hawley</a>
+Author: <a href="http://www.scotthawley.co
+
+
+
+m">Scott Hawley</a>
 </body>
 </html>
+
+
+
+## Changing the GUI
+
+Run QT5's `designer` (or `Designer`) app using `ui_shaart.ui` as an input.  Change the GUI as you like, save it, and then to generate the .py file, run
+
+```bash
+pyuic5 -x ui_shaart.ui -o ui_shaart.py
+```
+
 
 
 <a name="faq"></a>
