@@ -105,19 +105,17 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 
 ## Screenshots
 
-**TODO:** update screenshots with new QT5 version & show all tabs
-
-<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/rt60.jpg" width=600><br>
+<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/rt60.png" width=600><br>
 <br>
-<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/power.jpg" width=600><br>
+<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/power.png" width=600><br>
 <br>
-<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/spectro.jpg" width=600><br>
+<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/spectro.png" width=600><br>
 <br>
-<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/waterfall.jpg" width=600><br>
+<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/waterfall.png" width=600><br>
 <br>
-<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/modes.jpg" width=600><br>
+<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/modes.png" width=600><br>
 <br>
-<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/sabine.jpg" width=600><br>
+<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/sabine.png" width=600><br>
 <br>
 <img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/invspectro.jpg" width=600><br>
 <br>
