@@ -36,5 +36,5 @@ coll = COLLECT(exe,
                name='SHAART')
 app = BUNDLE(coll,
              name='SHAART.app',
-             icon='shaart_logo_icon.ico',
+             icon='shaart_logo_icon.icns',
              bundle_identifier=None)

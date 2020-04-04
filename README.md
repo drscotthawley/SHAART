@@ -68,7 +68,7 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 
 ## Downloads
 
-* [Mac Binary application](https://hedges.belmont.edu/~shawley/SHAART/SHAART.app.tar.gz) (325 MB)
+* [Mac Binary application](https://hedges.belmont.edu/~shawley/SHAART/SHAART.app.tar.gz) (337 MB)
 
 *  [Windows executable](https://drive.google.com/file/d/1F2ljmx9K1xb1S2RXX4YLEqViVLCqWzV2/view?usp=sharing) (380 MB). Note that the Windows EXE takes *a while* to come up when you first run it.
 * [Linux executable](https://drive.google.com/file/d/1uE_1x8ZCXI1bpQY5EamCEqUT2PUCLzYg/view?usp=sharing) (132 MB, Pop!\_OS / Ubuntu).  You can also <a href="#source">run from source</a> (below)
@@ -158,9 +158,7 @@ python SHAART.py
 
 ## Building an Executable
 
-First follow the instructions above for running from source.  Then install an app-building app.  
-For Mac, we use `py2app`, whereas for Linux and Windows we'll use `pyinstaller`.  
-Each of these methods will create a new directory called `SHAART/source/dist/`, **in which a successful build will result in the presence of working binary executable.**
+First follow the instructions above for running from source using `pyinstaller`, that will create a new directory called `SHAART/source/dist/`, **in which a successful build will result in the presence of working binary executable.**
 
 ```bash
 conda install -c conda-forge pyinstaller
@@ -174,14 +172,14 @@ pip install --upgrade 'setuptools<45.0.0'`
 
 ### Mac
 
-In order to run from source, you'd already need to have XCode, the command-line tools, and HomeBrew installed. Then in we add python.app and build:
+In order to run from source, you'd already need to have XCode, the command-line tools, and HomeBrew installed. Then in we install `python.app` and [an older versions of a few things](https://github.com/pyinstaller/pyinstaller/issues/4067), and build the app:
 
 ```bash
-conda install python.app
+conda install python.app joblib=0.11 scikit-learn=0.21.3 librosa=0.6.1
 pyinstaller SHAART.spec --specpath=test
 ```
 
-...and you'll find `SHAART.app` in `dist/`.
+...and you'll find `SHAART.app` in `source/dist/`.
 
 ### Linux (Pop!\_OS / Ubuntu)
 
@@ -240,11 +238,10 @@ pyuic5 -x ui_shaart.ui -o ui_shaart.py
 
 ## FAQ
 
-* Can it only read WAV files?  No.  Despite saying WAV file everywhere, the newest version of SHAART will read AIFF files too.  And the previous issues with 24-bit PCM WAV files has been resolved.
-* Do I always need an audio file?  No. You don't need a WAV file to use the room mode calculator or the Sabine calculator.
-* Can I get a logarithmic frequency scale for the spectrogram?  Not yet.
+* Can it only read WAV files?  No.  Despite saying WAV file everywhere, the newest version of SHAART will read AIFF files too.  (And any previous issues with reading 24-bit PCM WAV files has been resolved.)
+* Can I get a logarithmic frequency scale for the spectrogram?  Not yet, but soon.
 * For waterfall plots, it doesn't clear the window if you change the input data, resulting in multiple plots on the same page.  Bug or feature?
-* Does the "Record" feature work?  Not yet.
+* Does the "Record" feature work?  Not yet. Use Audacity or....any other utility to record. ;-) 
 * How do I contribute to SHAART?  Submit a Pull Request!
 
 <a name="notes"></a>
@@ -254,7 +251,8 @@ pyuic5 -x ui_shaart.ui -o ui_shaart.py
 
    * Updated code from Python 2.7 to Python 3.7
    * Updated GUI from Qt4 to Qt5
-   * Added capability for Windows & Linux executable builds
+   * Switched executable build from py2app to PyInstaller, added capability for Windows & Linux executable builds
+   * Re-ordered feature panes
 
 * v0.6: Minor improvements to speed and reliability
 
