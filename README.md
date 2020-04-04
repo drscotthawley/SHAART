@@ -41,7 +41,7 @@ SHAART Acoustic Tools, v 0.7<br>
 This lightweight audio analysis suite was initially written <b><i>for educational purposes only</i></b>
 over a period of 4 days.  (And then improved in bits.)  It's amazing how much you can accomplish with minimal knowledge of Python programming!
 
-The name "SHAART" uses the author's initials (S.H.) in homage to the famous "SMAART" set of acoustics analysis tools.  That and "SHAART" is just hilarious to say, for other reasons.  *(Note: "homage" = parody, derivative work = fair use = please don't sue.)*
+The name "SHAART" uses the author's initials (S.H.) in homage to the famous "SMAART" set of acoustics analysis tools by Rational Acoustics, Inc.  ...That and "SHAART" is just hilarious to say, for other reasons.  *(Note: "homage" = parody, derivative work = fair use = please don't sue.)*
 
 
 
@@ -68,7 +68,7 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 
 ## Downloads
 
-* [Mac Binary application](https://hedges.belmont.edu/~shawley/SHAART/SHAART.app.tar.gz) (105 MB)
+* [Mac Binary application](https://hedges.belmont.edu/~shawley/SHAART/SHAART.app.tar.gz) (325 MB)
 
 *  [Windows executable](https://drive.google.com/file/d/1F2ljmx9K1xb1S2RXX4YLEqViVLCqWzV2/view?usp=sharing) (380 MB). Note that the Windows EXE takes *a while* to come up when you first run it.
 * [Linux executable](https://drive.google.com/file/d/1uE_1x8ZCXI1bpQY5EamCEqUT2PUCLzYg/view?usp=sharing) (132 MB, Pop!\_OS / Ubuntu).  You can also <a href="#source">run from source</a> (below)
@@ -142,7 +142,7 @@ And here's an interesting one: a "leveler" effect:<br>
 
 ## Running from Source
 <b>Running SHAART.py from source:</b><br>
-Create a new [Anaconda](https://www.anaconda.com/) Python environment and install dependencies...
+Create a new [Anaconda](https://www.anaconda.com/) Python environment and install dependencies, then run...
 
 ```bash
 cd SHAART/source
@@ -162,26 +162,41 @@ First follow the instructions above for running from source.  Then install an ap
 For Mac, we use `py2app`, whereas for Linux and Windows we'll use `pyinstaller`.  
 Each of these methods will create a new directory called `SHAART/source/dist/`, **in which a successful build will result in the presence of working binary executable.**
 
-
-### Mac
-In order to run from source, you'd already need to have XCode, the command-line tools, and HomeBrew installed. Then in we add py2app
-
-```bash
-conda install py2app
-python setup.py py2app
-```
-
-### Windows & Linux
-
-Install PyInstaller:
-
 ```bash
 conda install -c conda-forge pyinstaller
 ```
 
-One note on PyInstaller: The pyinstaller-generated executable takes a long time to load up when you try to run it.
+And (because of conflicts) downgrade setuptools too, via `pip`: 
 
-#### Windows (10)
+```bash
+pip install --upgrade 'setuptools<45.0.0'`
+```
+
+### Mac
+
+In order to run from source, you'd already need to have XCode, the command-line tools, and HomeBrew installed. Then in we add python.app and build:
+
+```bash
+conda install python.app
+pyinstaller SHAART.spec --specpath=test
+```
+
+...and you'll find `SHAART.app` in `dist/`.
+
+### Linux (Pop!\_OS / Ubuntu)
+
+There's some conflict between `numba` and `librosa` and `pyinstaller`, and it's currently understood how to best resolve that yet.  So for now, the solution is to remove `numba` and re-install `librosa`and then build: 
+
+```
+conda remove numba 
+conda install -c conda-force librosa pyinstaller
+pyinstaller SHAART.spec --specpath=test
+```
+
+...And then you can just run the `dist/SHAART` executable from the command line.   Note: I can't seem to get it to be a "clickable icon" in Nautilus/Gnome.  Not sure how to do that.
+
+### Windows
+
 Here are the steps taken to build the Window EXE:
 
 1. Download & Install Windows SDK: https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk/
@@ -205,24 +220,10 @@ Here are the steps taken to build the Window EXE:
    pyinstaller -w --icon=shaart_logo_icon.ico  --hidden-import="pypiwin32" --hidden-import="pywintypes" --hidden-import="sklearn.utils._cython_blas" --hidden-import="sklearn.neighbors._typedefs" --hidden-import="sklearn.neighbors.quad_tree" --hidden-import="sklearn.tree._utils" --onefile SHAART.py
    ```
 
-#### Linux (Ubuntu / Pop!\_OS)
-
-For Linux, all dependencies are the in "spec" file, so after installing `pyinstaller`, you can just run...
-
-```bash
-pyinstaller SHAART.spec --specpath=test
-```
-...builds it.  And then you can just run the `dist/SHAART` executable from the command line.   Note: I can't seem to get it to be a "clickable icon" in Nautilus/Gnome.  Not sure how to do that.
-
 <hr>
-Author: <a href="http://www.scotthawley.co
-
-
-
-m">Scott Hawley</a>
+Author: <a href="http://www.scotthawley.com">Scott Hawley</a>
 </body>
 </html>
-
 
 
 ## Changing the GUI
@@ -287,8 +288,8 @@ The name is an acronym using the author's initials (S.H.), along with words
 like "Acoustic," "Analysis," "Reverberation Time" or "Research Tools" -- as well
 as, it is hoped, a lighthearted and not-legally-problematic play on words with
 the name of the industry-standard SMAART audio analysis software made by
-Rational Acoustics,Inc.  (SHAART is in no way affiliated with SMAART or
-Rational Acoustics, fyi.)  I mean, "SHAART" is just hilarious to say.
+Rational Acoustics, Inc.  (SHAART is in no way affiliated with SMAART or
+Rational Acoustics, fyi.)  ...I mean, "SHAART" is just hilarious to say.
 
 Author: Dr. Scott H. Hawley, Associate Professor of Physics,
         Belmont University, Nashville TN USA.  

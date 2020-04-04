@@ -1,18 +1,13 @@
-# -*- mode: python ; coding: utf-8 -*-
+# -*- mode: python -*-
 
 block_cipher = None
 
-def get_librosa_path():
-     import librosa
-     librosa_path = librosa.__path__[0]
-     print("librosa_path = ",librosa_path)
-     return librosa_path
 
 a = Analysis(['SHAART.py'],
-             pathex=['/home/shawley/github/SHAART/source'],
+             pathex=['/Users/shawley/github/SHAART/source'],
              binaries=[],
              datas=[],
-             hiddenimports=['librosa', 'scipy._lib.messagestream', 'sklearn.tree', 'sklearn.neighbors.typedefs', 'sklearn.neighbors.quad_tree', 'sklearn.tree._utils', 'sklearn.utils._cython_blas'],
+             hiddenimports=['sklearn.utils._cython_blas', 'sklearn.neighbors.typedefs', 'sklearn.tree._utils', 'librosa', 'sklearn.neighbors.quad_tree', 'sklearn.tree', 'scipy._lib.messagestream'],
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
@@ -22,23 +17,24 @@ a = Analysis(['SHAART.py'],
              noarchive=False)
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
-
-dict_tree = Tree(get_librosa_path(), prefix='librosa', excludes=["*.pyc"])
-a.datas += dict_tree
-a.binaries = filter(lambda x: 'librosa' not in x[0], a.binaries)
-
-
 exe = EXE(pyz,
           a.scripts,
-          a.binaries,
-          a.zipfiles,
-          a.datas,
           [],
+          exclude_binaries=True,
           name='SHAART',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          upx_exclude=[],
-          runtime_tmpdir=None,
-          console=False )
+          console=False , icon='shaart_logo_icon.ico')
+coll = COLLECT(exe,
+               a.binaries,
+               a.zipfiles,
+               a.datas,
+               strip=False,
+               upx=True,
+               name='SHAART')
+app = BUNDLE(coll,
+             name='SHAART.app',
+             icon='shaart_logo_icon.ico',
+             bundle_identifier=None)

@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 # used to parse files more easily
 from __future__ import with_statement
 from __future__ import print_function
@@ -105,7 +105,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         #QtCore.QObject.connect(self.waveform_abs_checkBox, QtCore.SIGNAL('stateChanged(int)'), self.update_tab)
         self.waveform_abs_checkBox.stateChanged.connect(self.update_tab)
         self.waveform_env_checkBox.stateChanged.connect(self.update_tab)
-        
+
         self.inwavfileselectButton.clicked.connect(self.menuselect_read_fileA )
  #       QtCore.QObject.connect(self.rt60lineEdit, QtCore.SIGNAL('editingFinished()'),   self.changedtext_read_fileA )
         self.inwavfileBselectButton.clicked.connect(self.menuselect_read_fileB )
@@ -156,7 +156,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         nsamples = len(y)
         if (len(y.shape) > 1):    # take left channel of stereo track
             y = y[:,0]
-       
+
         x = np.arange(nsamples)*1.0/samplerate   # time values
         #print "read_audio_file: finished with file [",file_name,"]"
         return y, x, samplerate
@@ -201,6 +201,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         fileB = QtWidgets.QFileDialog.getOpenFileName()
         # if a file is selected
         if fileB:
+            fileB = fileB[0]   # newer qt5 also returns list of file types, which we don't want
             # update the lineEdit text with the selected filename
             self.fileBlineEdit.setText(fileB)
             self.changedtext_read_fileB()
@@ -268,7 +269,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         modes = []
         #maxmodenum = 15
         outstring = "Freq (Hz)  Nx Ny Nz\n---------  -- -- -- \n"
-        # The following convoluted loops & if statement are simply to enforce a 
+        # The following convoluted loops & if statement are simply to enforce a
         # particular ordering I am fond of for displaying mode numbers
         for modesum in np.arange(1,maxmodenum+1):
            for mm in np.arange(1,modesum+1):
@@ -282,7 +283,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
                           modes.append(mode)
         # or we can destroy that ordering by sorting by frequency
         modes.sort()
-        for m in modes: 
+        for m in modes:
             thisline = '%9.1f  %2d %2d %2d\n' %  (m[0], m[1], m[2], m[3])
             outstring = outstring + thisline
         self.modesTextEdit.setPlainText(outstring)
@@ -301,7 +302,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         # Inverse Short-Time Fourier Transform, i.e. "Inverse Spectrogram"
         # Props to Steve Tjoa, cf.  http://stackoverflow.com/questions/2459295/stft-and-istft-in-python
         # Added the overlapping frames / buffers to improve image quality - Scott Hawley
-        # inputs: 
+        # inputs:
         #   X = image/ stft
         #   fs = sample rate, in samples/sec
         #   T = duration, in secs
@@ -311,31 +312,31 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         #  ||----------|--------------------o------------------|-----------------------o-----------------|-----etc
         #               <------------------hop----------------><----------------------hop---------------->
         #                                    <--------------------hop------------------>
-        #    <---buf--->                                        <---buf--->          
+        #    <---buf--->                                        <---buf--->
         #    <---------------------------- frame-------------------------->
         #                                             <--buf--->                                          <--buf--->
         #                                             <---------------------------- frame-------------------------->
         #...and then the starting and ending buffers will be removed
-        
+
         nhops = X.shape[1]              # each pixel is a "hop"
         hop_duration = T / nhops        # in secs
-        samples_per_hop = int(hop_duration * fs) 
-        
+        samples_per_hop = int(hop_duration * fs)
+
         ibuf = 128 * fs / 44100     # buffer size,  calibrated for 44.1 kHz
         tbuf = 1.0 * ibuf / fs      # may seem redundant, but readable
-        x = zeros((T+2*tbuf)*fs)         
-        
+        x = zeros((T+2*tbuf)*fs)
+
         # around each hop, we put a frame, centered on the hop, but wider by buf on each side
         samples_per_frame = samples_per_hop + 2*ibuf
         n = samples_per_frame
-        
+
         for ihop in range(nhops):
             b = np.array(ifft(X[ihop], n = n))    # b is a 'vertical' set of pixels
-            framedata = np.imag(b)     # I actually find that imag() gives better image results than real() 
+            framedata = np.imag(b)     # I actually find that imag() gives better image results than real()
             ibgn = ibuf +  samples_per_hop/2 +  ihop*samples_per_hop - samples_per_frame/2
             iend = ibgn + n-1
             x[ibgn:iend] += framedata[0:n-1]
-        
+
         y = x[ibuf:-ibuf]  # chop off the buffers
         return y
 
@@ -350,7 +351,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
 
         nhops = X.shape[0]              # each pixel is a "hop"
         hop_duration = T / nhops        # in secs
-        samples_per_hop = int(hop_duration * fs) 
+        samples_per_hop = int(hop_duration * fs)
         nfreq = X.shape[1]
         dfreq = (maxfreq - minfreq) / nfreq
 
@@ -370,15 +371,15 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
 #                phase = 3.14
                 framedata = intensity * np.sin( 2*3.14159*freq * np.arange(0,hop_duration,hop_duration/samples_per_hop) + phase )
 
-                ibgn = ibuf +  ihop*samples_per_hop 
-                iend = ibgn + samples_per_hop 
+                ibgn = ibuf +  ihop*samples_per_hop
+                iend = ibgn + samples_per_hop
                 x[ibgn:iend] += framedata[0:iend-ibgn]
-          
+
 
         y = x
         return y
 
-    
+
     def img_to_wav(self):
         im_filename  = str( self.is_imname_lineEdit.text() )
         wav_filename = str( self.is_wavname_lineEdit.text() )
@@ -386,11 +387,11 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         rate_str = str( self.is_rate_lineEdit.text() )
         minf_str = str( self.is_minf_lineEdit.text() )
         maxf_str = str( self.is_maxf_lineEdit.text() )
-        
+
         if (im_filename=="") | (wav_filename=="") | (dur_str=="") | (rate_str=="") |(minf_str=="") | (maxf_str=="") : return
 
         rate = int( rate_str )
-        image_duration = float( dur_str ) 
+        image_duration = float( dur_str )
         minfreq = float(minf_str)
         maxfreq = float(maxf_str)
 
@@ -408,7 +409,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         contrast_power = 1.5          # higher = more contrast, but also introduces more distortion
         X = (X)**contrast_power
         X = X.T  # transpose
-        X = np.fliplr(X) # flip 
+        X = np.fliplr(X) # flip
 
         print('X shape = ',X.shape)
 #        mysignal = librosa_core.istft(X.T)
@@ -420,18 +421,18 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         #-------------------------------------------
         maxval = np.max(mysignal)
         mysignal = np.array([1.0*x / maxval for x in mysignal])
-        
+
         iscale = 32767           # This sets the overall volume, 32727 = full scale
 
         # In the following line, the dtype='i2' selects 16-bit; without it you get 64 bits & no audio
-        data = np.array([int(iscale * x) for x in mysignal], dtype='i2')  
+        data = np.array([int(iscale * x) for x in mysignal], dtype='i2')
 
         # write to file
         #--------------
         wavfile.write(wav_filename, rate, data)
 
         self.is_status_label.setText("Finished!  Try opening the WAV file in the Spectrogram!")
-           
+
         return
 
 
@@ -446,7 +447,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         eq_str = str( self.equation_lineEdit.text() )
 
         # basic definitions
-        TMAX = float( dur_str ) 
+        TMAX = float( dur_str )
         SR = int( rate_str )
         SRm1 = 1.0/SR
         sample_rate = SR
@@ -468,19 +469,19 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         eq_str = re.sub('exp','np.exp',eq_str)
         eq_str = re.sub('PI','3.14159265358979323846',eq_str)
         eq_str = re.sub('np.np.','np.',eq_str)
-        
+
 
         print('eq_str = [',eq_str,']')
         # now create the sounds
         print('Starting loop')
         #for i in range(NS):    #---------------- the slow way
         #   t = i * SRm1
-        #   newstr = "amp[i]  = " + eq_str 
+        #   newstr = "amp[i]  = " + eq_str
         #   exec newstr          #------------------end slow way
 
         t = np.arange(0,TMAX, SRm1)
         #print 't.shape, amp.shape, t[1] = ',t.shape,amp.shape,t[1]
-        newstr = "amp[0:t.shape[0]] = " + eq_str 
+        newstr = "amp[0:t.shape[0]] = " + eq_str
         print('newstr = [', newstr, ']')
         exec(newstr)
 
@@ -506,7 +507,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         result = result / maxval;
 #        return result[result.size/2:]
         return result
-    
+
 
     #---------------------------------------------------
     #  Convolution
@@ -525,7 +526,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
            amp = amp3
 
 
-        
+
 
         if self.checkBox_autocorr.checkState(): # autocorrelation
             print("Debug: autocorrelation is checked")
@@ -544,7 +545,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
 
 
            print('starting convolution...')
-           amp3 = signal.fftconvolve( amp, ampB, mode="same") 
+           amp3 = signal.fftconvolve( amp, ampB, mode="same")
            print('finished convolution...')
 
 
@@ -554,7 +555,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         if self.checkBox_removefirsthalf.checkState():
            amp = amp3[amp3.size/2:]    # cut off first half of array
         else:
-           amp = amp3 
+           amp = amp3
 
         orig_amp = amp
         t = np.arange(0.0,amp.size,1.0)/sample_rate;
@@ -576,26 +577,26 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         current_index = 0
         maxi = len(amp)-1
 
-    
+
         # pull a frame_count samples from array "amp"
         def get_chunk(frame_count):
            global current_index
 
            if ( current_index < maxi):
                iend = np.min(  [current_index + frame_count-1, maxi ])
-               chunk = amp[current_index: maxi] 
+               chunk = amp[current_index: maxi]
                out_data = chunk.astype(np.float32).tostring()
-               current_index += frame_count 
+               current_index += frame_count
            else:
                out_data = []
            return out_data
 
-         
+
         # define callback
         def callback(in_data, frame_count, time_info, status):
            out_data = get_chunk(frame_count)
            return ( out_data , pyaudio.paContinue)
-        
+
 
 
         if nofile: return
@@ -610,18 +611,18 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
                    rate=sample_rate,
                    output=True,
                    stream_callback=callback)
-        
+
         #start the stream
         stream.start_stream()
-        
+
         # wait for the stream to finish
         while stream.is_active() and (current_index < len(amp)-1) :
            time.sleep(0.1)
-        
+
         #stop stream
         stream.stop_stream()
         stream.close()
-        
+
         #close PyAudio
         p.terminate()
 
@@ -637,44 +638,47 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         global orig_ampB, sample_rateB, ampB, tB, filenameB
         tabnum = self.tabWidget.currentIndex()
 #        print "in update_tab: filenameA = ",filenameA
-        if (0 == tabnum):   #equation
-            #  self.equation_go()  only run equation_go when the go button is pushed
-            return
-        elif (1 == tabnum):  # play/rec
+        if (0 == tabnum):   # rt60
             if nofile: return
-        elif (2 == tabnum):   # convolve
-            if nofile: return
-            # self.convo_make(); only run convo_go when the go button is pushed
-        elif (3 == tabnum):   # waveform
+            self.rt60.update_graph(amp,t,filenameA,ampB,tB,filenameB)
+        elif (1 == tabnum):   # waveform
             self.waveform.update_graph(amp,t,filenameA,ampB,tB,filenameB,
                    self.waveform_abs_checkBox.checkState(),self.waveform_env_checkBox.checkState())
             if nofile: return
-        elif (4 == tabnum):   # rt60
-            if nofile: return
-            self.rt60.update_graph(amp,t,filenameA,ampB,tB,filenameB)
-        elif (5 == tabnum):   # power spectrum
+        elif (2 == tabnum):   # power spectrum
             if nofile: return
             self.pwrspec.update_graph(amp,sample_rate,filenameA,ampB,sample_rateB,filenameB)
-        elif (6 == tabnum):  # spectrogram
+        elif (3 == tabnum):  # spectrogram
             if nofile: return
             self.spectro.update_graph(amp,sample_rate,self.spectrocmcomboBox.currentIndex())
-        elif (7 == tabnum):   # wateverfall
+        elif (4 == tabnum):   # wateverfall
             if nofile: return
             self.water.update_graph(amp,sample_rate)
-        elif (8 == tabnum):  # Room Modes
-            self.calc_modes()
-        elif (9 == tabnum):  # Sabine Eq
-            return
-        elif (10 == tabnum):  # invSpectro
+        elif (5 == tabnum):  # invSpectro
             self.img_to_wav()
             return
-  
+        elif (6 == tabnum):  # Room Modes
+            self.calc_modes()
+        elif (7 == tabnum):  # Sabine Eq
+            return
+        elif (8 == tabnum):   #equation
+            #  self.equation_go()  only run equation_go when the go button is pushed
+            return
+        elif (9 == tabnum):   # convolve
+            if nofile: return
+            # self.convo_make(); only run convo_go when the go button is pushed
+        elif (10 == tabnum):  # play/rec
+            if nofile: return
+        else:
+            print("ERROR: tabnum =",tabnum,"is unsupported.")
+
+
     def about_message(self):
         msg = """
-SHAART v.0.6 
+SHAART v.0.6
 http://hedges.belmont.edu/~shawley/SHAART
-        
-A simple audio analysis suite intended for 
+
+A simple audio analysis suite intended for
 educational purposes, student projects, etc.
 
 Scott H. Hawley, Ph.D.
