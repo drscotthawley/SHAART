@@ -24,9 +24,10 @@ SHAART Acoustic Tools, v 0.7<br>
 <a href="#features">Features</a> &nbsp;&nbsp;
 <a href="#downloads">Downloads</a> &nbsp;&nbsp;
 <a href="#license">License</a> &nbsp;&nbsp;
-<a href="#screenshots">Screenshots</a> &nbsp;&nbsp;<br>
-<a href="#source">Running From Source</a>  &nbsp;&nbsp;
 <a href="#tutorial">Tutorial(s)</a> &nbsp;&nbsp;
+<a href="#screenshots">Screenshots</a> &nbsp;&nbsp;
+<a href="#source">Running From Source</a>  &nbsp;&nbsp;
+<a href="#build">Building an Executable</a>  &nbsp;&nbsp;
 <a href="#faq">FAQ</a> &nbsp;&nbsp;
 <a href="#notes">Release Notes</a> &nbsp;&nbsp;
 <br><br>
@@ -46,21 +47,21 @@ The name "SHAART" uses the author's initials (S.H.) in homage to the famous "SMA
 
 <a name="features"></a>
 
-## Features 
+## Features
 
-Most of these features are illustrated in the <a href="#screenshots">Screenshots</a> section further down this page. 
+Most of these features are illustrated in the <a href="#screenshots">Screenshots</a> section further down this page.
 
 * **RT60 Measurement:** The reason SHAART was written in the first place.  Load an audio file, filter in different octave bands, draw a "best fit" line on the graph by hand, read off the reverb time.  (Designed to mimic functionality of SMAART Acoustics Tools(tm).)  Can show two files ("File A" and "File B") at once.  See "Tutorial(s)" below for a demo.
 * **Waveform Display:** Linear scale only.  Displays two waveforms ("File A" and "File B") at once.
 * **Power Spectrum:** Pretty standard display Doesn't do a log scale yet, though I'd like to add that.  Displays two spectra ("File A" and "File B" at once.)
 * **Spectrogram:**  Shows magnitude as color, vs frequency and time. as with Power Spectrum.  Offers a few colormaps.  No log freq scale yet.  Only one file ("File A") shown.
 * **Waterfall Plot:**  Alternative to Spectrogram, shows magnitude surface a function of time & frequency.   No log freq scale yet.  Only one file ("File A") shown.
-* **Image-To-Audio:**  Import an image, output audio for which the spectrogram will resemble that image.  Sounds a little "phasey," could be cleaner.  Useful for demonstrating audio effects visually!  See "Screenshots," below.
-* **Room Mode Calculator:**  Uses the Rayleigh equation for standing waves of a 3D box, and also plots a "Fake Room Response" by assigning relative amplitudes to axial, tangential, and oblique modes.  Useful for demonstrating mode distributions for different room shapes. 
+* **"Inverse Spectrogram" (Image-To-Audio):**  Import an image, output audio for which the spectrogram will resemble that image.  Sounds a little "phasey," could be cleaner.  Useful for demonstrating audio effects.  See "Screenshots," below.
+* **Room Mode Calculator:**  Uses the Rayleigh equation for standing waves of a 3D box, and also plots a "Fake Room Response" by assigning relative amplitudes to axial, tangential, and oblique modes.  Useful for demonstrating mode distributions for different room shapes.
 * **Sabine Equation Calculator:** Assumes a box-shaped room, lets you apply absorption to different surfaces.  Based on Chapter 8 of Berg & Stork textbook, including their table for absorption coefficients.
 * **Equation-to-Audio:** Specify a time-dependent function, and it'll generate audio from that. Useful for sine sweeps, e.g. for building impulse responses using Convolution (below)
 * **Convolution:** Convolve File A with File B.  Useful for making impulse responses from sine sweeps, or just for screwing around (e.g. convolving Led Zeppelin's "The Ocean" with the sound of a dog bark.)
-
+* **Play(/Record):** Very rudimentary.  Will play the audio out the speaker, with no controls.  Record doesn't work yet.
 
 
 <a name="downloads"></a>
@@ -162,7 +163,7 @@ For Mac, we use `py2app`, whereas for Linux and Windows we'll use `pyinstaller`.
 Each of these methods will create a new directory called `SHAART/source/dist/`, **in which a successful build will result in the presence of working binary executable.**
 
 
-### Mac 
+### Mac
 In order to run from source, you'd already need to have XCode, the command-line tools, and HomeBrew installed. Then in we add py2app
 
 ```bash
@@ -172,7 +173,7 @@ python setup.py py2app
 
 ### Windows & Linux
 
-Install PyInstaller: 
+Install PyInstaller:
 
 ```bash
 conda install -c conda-forge pyinstaller
@@ -192,10 +193,10 @@ Here are the steps taken to build the Window EXE:
    ```bash
    conda install -c conda-forge ffmpeg
    conda install -c anaconda pyqt pywin32 pypiwin32
-   conda install pyaudio librosa pywintypes 
+   conda install pyaudio librosa pywintypes
    ```
 
-5. Downgrade `setuptools` to avoid conflicts `pyinstaller` as per https://github.com/pypa/setuptools/issues/1963: 
+5. Downgrade `setuptools` to avoid conflicts `pyinstaller` as per https://github.com/pypa/setuptools/issues/1963:
    `pip install --upgrade 'setuptools<45.0.0'`
 
 6. Run `pyinstaller` with these arguments:
@@ -206,12 +207,12 @@ Here are the steps taken to build the Window EXE:
 
 #### Linux (Ubuntu / Pop!\_OS)
 
-For Linux, all dependencies are the in "spec" file, so you can just run...
+For Linux, all dependencies are the in "spec" file, so after installing `pyinstaller`, you can just run...
 
 ```bash
 pyinstaller SHAART.spec --specpath=test
 ```
-...builds it.  And then you can just run the `dist/SHAART` executable from the command line.   Note: I can't seem to get it to be a "clickable icon" in Nautilus/Gnome.  Not sure how to do that. 
+...builds it.  And then you can just run the `dist/SHAART` executable from the command line.   Note: I can't seem to get it to be a "clickable icon" in Nautilus/Gnome.  Not sure how to do that.
 
 <hr>
 Author: <a href="http://www.scotthawley.co
