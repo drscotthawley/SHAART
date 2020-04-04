@@ -70,7 +70,7 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 
 * [Mac Binary application](https://hedges.belmont.edu/~shawley/SHAART/SHAART.app.tar.gz) (337 MB)
 
-*  [Windows executable](https://drive.google.com/file/d/1F2ljmx9K1xb1S2RXX4YLEqViVLCqWzV2/view?usp=sharing) (380 MB). Note that the Windows EXE takes *a while* to come up when you first run it.
+*  [Windows executable](https://drive.google.com/open?id=1_dLPRHdfoqchFtglIbRrqDvwV37Npbhb) (361 MB). Note that the Windows EXE takes *a while* to come up when you first run it.
 * [Linux executable](https://drive.google.com/file/d/1uE_1x8ZCXI1bpQY5EamCEqUT2PUCLzYg/view?usp=sharing) (132 MB, Pop!\_OS / Ubuntu).  You can also <a href="#source">run from source</a> (below)
 * [Source code](https://hedges.belmont.edu/~shawley/SHAART/SHAART.tar.gz) (in Python)  See <a href="#source">Running From Source</a> below for further instructions.
 * [Sample WAV file](https://hedges.belmont.edu/~shawley/SHAART/sample_data.wav)
