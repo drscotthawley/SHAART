@@ -48,6 +48,7 @@ def butter_bandpass(lowcut, highcut, fs, order=5):
     if (highcut > nyq):
        highcut = nyq
     high = highcut / nyq
+    print("nyq, low, high, order = ",nyq, low, high, order)
     b, a = signal.butter(order, [low, high], btype='band')
     return b, a
 
@@ -147,7 +148,8 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         #print "read_audio_file: reading file [",file_name,"]"
         if file_name=='': return
 
-        y, samplerate = librosa.load(file_name)
+        y, samplerate = librosa.load(file_name, sr=None)
+        print("read: samplerate = ",samplerate)
         #f = Sndfile(unicode(file_name), 'r')
         #wav_data = np.array(f.read_frames(f.nframes), dtype=np.float64)
         #samplerate = f.samplerate
