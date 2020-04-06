@@ -120,7 +120,7 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 ![sabine](images/sabine.png)
 
 
-<br>
+
 The "invSpectro" feature created the file [mandrill.wav](audio/mandrill.wav) which has a spectrogram shown below:
 
 ![mandrill_spectro](images/mandrill_spectro.png)
