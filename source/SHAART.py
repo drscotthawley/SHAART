@@ -9,16 +9,10 @@ import numpy as np
 # for command-line arguments
 import sys
 
-# Qt4 bindings for core Qt functionalities (non-GUI)
-#from PyQt4 import QtCore
-
-# Python Qt4 bindings for GUI objects
-#from PyQt4 import QtGui
-
+# GUI bindings
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtCore import *
-
 
 # import the MainWindow widget from the converted .ui files
 from ui_shaart import Ui_TheMainWindow
@@ -33,7 +27,6 @@ from matplotlib.backends.backend_qt4 import NavigationToolbar2QT as NavigationTo
 import re
 from PIL import Image    #import Image   # cleaned this up
 from scipy import zeros, ifft
-#import librosa.core as librosa_core
 
 import pyaudio
 import time
@@ -48,7 +41,6 @@ def butter_bandpass(lowcut, highcut, fs, order=5):
     if (highcut > nyq):
        highcut = nyq
     high = highcut / nyq
-    print("nyq, low, high, order = ",nyq, low, high, order)
     b, a = signal.butter(order, [low, high], btype='band')
     return b, a
 
@@ -58,18 +50,13 @@ def butter_bandpass_filter(data, lowcut, highcut, fs, order=5):
     return y
 #---------------------------------------------------------
 
-# Just slick for debugging:
-#def funcname():
-#    import inspect
-#    return inspect.stack()[1][3]
+# Just for debugging:
 def funcname():
     import traceback
     return traceback.extract_stack(None, 2)[0][2]
 
 
-# Global variables
-#global amp, orig_amp, t, dB, sample_rate, nofile, filenameA
-#global ampB, orig_ampB, tB, dB_B, sample_rateB, nofileB, filenameB
+# Global variables (it's a GUI-based code, so...)
 amp = [1.0]
 orig_amp = amp
 t= [1.0]
@@ -145,29 +132,20 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
 
     # generic reader routine for audio files.
     def read_audio_file(self, file_name):
-        #print "read_audio_file: reading file [",file_name,"]"
         if file_name=='': return
 
-        y, samplerate = librosa.load(file_name, sr=None)
-        print("read: samplerate = ",samplerate)
-        #f = Sndfile(unicode(file_name), 'r')
-        #wav_data = np.array(f.read_frames(f.nframes), dtype=np.float64)
-        #samplerate = f.samplerate
-        #f.close()
-        y = 1.0*y  # convert to float
+        y, samplerate = librosa.load(file_name, sr=None, dtype=np.float32)
         nsamples = len(y)
         if (len(y.shape) > 1):    # take left channel of stereo track
             y = y[:,0]
 
         x = np.arange(nsamples)*1.0/samplerate   # time values
-        #print "read_audio_file: finished with file [",file_name,"]"
         return y, x, samplerate
 
     def changedtext_read_fileA(self):
         global amp, filenameA, t, sample_rate, orig_amp
         filenameA = self.rt60lineEdit.text()
         if filenameA=='': return
-#        print "changedtext_read_fileA: filenameA = [",filenameA,"]"
         amp, t, sample_rate = self.read_audio_file(filenameA)
         orig_amp = amp
         global nofile
@@ -176,10 +154,8 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
 
     def menuselect_read_fileA(self):
         """opens a file select dialog"""
-#        print "menuselect_read_fileA: opening menu"
         # open the dialog and get the selected file
         file = QtWidgets.QFileDialog.getOpenFileName()
-#        print "menuselect_read_fileA: after file="
         # if a file is selected
         if file:
             file = file[0]   # newer qt5 also returns list of file types, which we don't want
@@ -232,26 +208,20 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         global amp, orig_amp, filenameA
         global ampB, orig_ampB, filenameB
         octave_text = str(self.rt60comboBox.currentText())
-        #print "filter_signal: at beginning"
         if (octave_text != 'All'):
            octave_center_freq = (float)(re.sub(r' Hz','',octave_text))
            lowcut  = 1.0*(int)(0.71 * octave_center_freq)
            highcut = 1.0*(int)(1.42 * octave_center_freq)
-           #print "filter_signal: starting filter"
            amp = butter_bandpass_filter(orig_amp, lowcut, highcut, 1.0*sample_rate, order=3)
            if (len(orig_ampB) > 1):
               ampB = butter_bandpass_filter(orig_ampB, lowcut, highcut, 1.0*sample_rate, order=3)
-           #print "filter_signal: finished filtering"
         else:
            amp = orig_amp
            if (len(orig_ampB) > 1):
               ampB = orig_ampB
         self.rt60.linex = [0]   # erase the old line
         self.rt60.liney = [0]   # erase the old line
-        #print "filter_signal: calling update_graph"
         self.rt60.update_graph(amp,t,filenameA,ampB,tB,filenameB)
-        #print "filter_signal: back from update_graph"
-        #print "filter_signal: finished"
         return
 
 
@@ -366,11 +336,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
             for ifreq in range(nfreq):   #scan vertically upwards
                 freq = minfreq + ifreq * dfreq
                 intensity = X[ihop,ifreq]
-               # print '     ihop, freq, intensity = ',ihop,freq,intensity
-                # framedata will be a short sine wave which will get added to x
                 phase = 0.0
-#                phase = np.random.random_sample() * 3.14159/2
-#                phase = 3.14
                 framedata = intensity * np.sin( 2*3.14159*freq * np.arange(0,hop_duration,hop_duration/samples_per_hop) + phase )
 
                 ibgn = ibuf +  ihop*samples_per_hop
@@ -402,8 +368,6 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         image = np.array(pic.getdata())
         image = np.array(image[:,0]).reshape(pic.size[1], pic.size[0])
 
-        print('image shape = ',image.shape)
-
 
         # Construct the signal. Put the image into X, transpose & flip, take its inverse stft
         #---------------------
@@ -413,9 +377,6 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         X = X.T  # transpose
         X = np.fliplr(X) # flip
 
-        print('X shape = ',X.shape)
-#        mysignal = librosa_core.istft(X.T)
-#        mysignal = self.my_istft(X, rate, image_duration)    # conversion routine
         mysignal = self.ekman_istft(X, rate, image_duration,minfreq,maxfreq)    # conversion routine
 
 
@@ -472,24 +433,13 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         eq_str = re.sub('PI','3.14159265358979323846',eq_str)
         eq_str = re.sub('np.np.','np.',eq_str)
 
-
-        print('eq_str = [',eq_str,']')
         # now create the sounds
-        print('Starting loop')
-        #for i in range(NS):    #---------------- the slow way
-        #   t = i * SRm1
-        #   newstr = "amp[i]  = " + eq_str
-        #   exec newstr          #------------------end slow way
-
         t = np.arange(0,TMAX, SRm1)
-        #print 't.shape, amp.shape, t[1] = ',t.shape,amp.shape,t[1]
         newstr = "amp[0:t.shape[0]] = " + eq_str
-        print('newstr = [', newstr, ']')
+        print('Executing newstr = [', newstr, ']')
         exec(newstr)
 
         print('Finished loop')
-        #print 't = ',t
-        #print 'amp = ',amp
 
         # Global settings for commucating with the rest of the program
         orig_amp = amp
@@ -498,18 +448,14 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         filenameA = eq_str
         return
 
-
     # My own little autocorrelation routine
     def my_autocorr(self,x):
         meanx = np.mean(x)
         x -= meanx
         result = np.correlate(x, x, mode='full')
-    #    result = np.correlate(x,x,mode='full')[len(x)-1:];
         maxval = np.max(result);
         result = result / maxval;
-#        return result[result.size/2:]
         return result
-
 
     #---------------------------------------------------
     #  Convolution
@@ -527,29 +473,12 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
            amp3 = amp[::-1]
            amp = amp3
 
-
-
-
         if self.checkBox_autocorr.checkState(): # autocorrelation
             print("Debug: autocorrelation is checked")
             amp3 = self.my_autocorr(amp)
         elif (0 == nofileB):   # normal convolution
 
-
-           #TODO: make this a button
-           #print 'adding +3dB/octave filter...'
-           #fftamp = np.fft.rfft(amp,n=16384)
-           #fftamp = fftamp * range(len(fftamp))
-           #amp = np.fft.irfft(fftamp,n=16384)
-           #fftamp = np.fft.rfft(ampB,n=16384)
-           #fftamp = fftamp * range(len(fftamp))
-           #ampB = np.fft.irfft(fftamp,n=16384)
-
-
-           print('starting convolution...')
            amp3 = signal.fftconvolve( amp, ampB, mode="same")
-           print('finished convolution...')
-
 
            maxval_3 = np.max(amp3)
            amp3 *= 0.9999999 / maxval_3
@@ -639,7 +568,6 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         global orig_amp, sample_rate, amp, t, filenameA
         global orig_ampB, sample_rateB, ampB, tB, filenameB
         tabnum = self.tabWidget.currentIndex()
-#        print "in update_tab: filenameA = ",filenameA
         if (0 == tabnum):   # rt60
             if nofile: return
             self.rt60.update_graph(amp,t,filenameA,ampB,tB,filenameB)
@@ -677,7 +605,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
 
     def about_message(self):
         msg = """
-SHAART v.0.6
+SHAART v.0.7
 http://hedges.belmont.edu/~shawley/SHAART
 
 A simple audio analysis suite intended for

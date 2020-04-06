@@ -1,8 +1,6 @@
 # Python Qt4 bindings for GUI objects
 from PyQt5 import QtGui, QtWidgets
 
-# import the Qt4Agg FigureCanvas object, that binds Figure to
-# Qt4Agg backend. It also inherits from QWidget
 from matplotlib.backends.backend_qt4agg \
 import FigureCanvasQTAgg as FigureCanvas
 
@@ -101,7 +99,6 @@ class Rt60Widget(QtWidgets.QWidget):
            # no buttons pressed
            self.press = None
 
-
            # the line that users get to draw
            self.linex = [0]
            self.liney = [0]
@@ -109,19 +106,15 @@ class Rt60Widget(QtWidgets.QWidget):
            self.line.set_color("red")
            self.line.set_linewidth(1.5)
            self.line.set_linestyle('-')
-           
+
            # initialize annotation
            self.status_text = self.canvas.ax.text(0.45, 0.9, '', transform=self.canvas.ax.transAxes,size=14,ha='center')
-#           self.octave_text = self.canvas.ax.text(0.95, 0.86, '', transform=self.canvas.ax.transAxes,size=14,ha='right')
-  
-           # intialize plot area with some blank data
- #          self.mainplot = self.canvas.ax.plot([0], [0], color="blue")
 
       def legend_string(self,instr):
            instr = "%s" % instr           # just to make sure it's of the right 'type'
            outstr = path.basename(instr)
            match = re.match(r"(.*)\.wav",outstr)    # take out the .wav if possible
-           if (match is not None): 
+           if (match is not None):
               outstr = match.group(1)
            return outstr
 
@@ -133,16 +126,15 @@ class Rt60Widget(QtWidgets.QWidget):
            self.line.set_color("red")
            self.line.set_linewidth(2.0)
            self.line.set_linestyle('-')
-           
+
            ## initialize annotation
            self.status_text = self.canvas.ax.text(0.45, 0.9, '', transform=self.canvas.ax.transAxes,size=14,ha='center')
-#           self.octave_text = self.canvas.ax.text(0.95, 0.86, '', transform=self.canvas.ax.transAxes,size=14,ha='right')
-            
+
 
       def on_press(self, event):
            'on button press we will start drawing a line'
            #unless we're in pan or zoom interactive mode
-           mode = self.canvas.ax.get_navigate_mode() 
+           mode = self.canvas.ax.get_navigate_mode()
            if ((mode != 'ZOOM') & (mode != 'PAN')):
                x0, y0 = event.xdata, event.ydata
                self.press = x0, y0
@@ -152,12 +144,7 @@ class Rt60Widget(QtWidgets.QWidget):
            if self.press is None: return
            x0, y0 = self.press
            x = x0, event.xdata
-           y = y0, event.ydata 
-           # the line that users get to draw
-           #self.line, = self.canvas.ax.plot([0], [0])
-           #self.line.set_color("red")
-           #self.line.set_linewidth(1.5)
-           #self.line.set_linestyle('-')
+           y = y0, event.ydata
 
            self.line.set_data(x, y)   # this sets up the line to be drawn
            self.linex = x
@@ -165,36 +152,27 @@ class Rt60Widget(QtWidgets.QWidget):
 
            if (y[1] != y[0]):
                rt60 = -60.0*(x[1]-x[0])/(1.0*y[1]-y[0])
-   #           print 'RT60(s)= ',rt60
                status_template = 'RT60 = %.2f s'
                self.status_text.set_text(status_template%(rt60))
-               #octave_template = '%s Octave'
-               #octave_text = str(self.parent.parent.canvas.mplcomboBox.currentText()) 
-               #self.octave_text.set_text(octave_template%(octave_text))
                self.line.figure.canvas.draw()   # update the canvas
 
       def on_release(self, event):
-           'on release we reset the press data'
+           '''on release we reset the press data'''
            self.press = None
-           mode = self.canvas.ax.get_navigate_mode() 
+           mode = self.canvas.ax.get_navigate_mode()
            # undo any zoom effects
            if ('ZOOM' == mode):
               self.navi_toolbar.zoom()
            return
 
       def disconnect(self):
-           'disconnect all the stored connection ids'
+           '''disconnect all the stored connection ids'''
            self.line.figure.canvas.mpl_disconnect(self.cidpress)
            self.line.figure.canvas.mpl_disconnect(self.cidrelease)
            self.line.figure.canvas.mpl_disconnect(self.cidmotion)
 
-
-
       def update_graph(self,amp,t,filenameA,ampB,tB, filenameB):
-        print("in rt60's update_graph:  filenameA = %s" % filenameA)
         """Updates the graph with new data/annotations"""
-        #fig = pl.figure()
-        #ax = fig.add_subplot(111)
 
         epsilon = 1.0e-8     # added to avoid log(0) errors
 
@@ -213,11 +191,7 @@ class Rt60Widget(QtWidgets.QWidget):
            plotsamples = 2048
         else:
            plotsamples = 1024
-#        print "downsampling, original length = ",len(dB)
-        #ds_dB, ds_t  = signal.resample(dB,plotsamples,t)
         ds_dB, ds_t  = my_resample(dB,plotsamples,t)
-        #ds_dB, ds_t  = dB, t   # no sampling
-#        print "finished downsampling"
 
         # Set up the plot
         self.refresh()
@@ -244,26 +218,20 @@ class Rt60Widget(QtWidgets.QWidget):
         else:
            l1 = self.canvas.ax.legend([p1], [leg_fA], loc=1)
 
-           
         l1.draw_frame(False)                   # no box around the legend
         self.canvas.ax.grid(True)
 
-
         #draw the line again, on top
         self.line, = self.canvas.ax.plot(self.linex, self.liney)
-        self.line.set_data(self.linex, self.liney)   
+        self.line.set_data(self.linex, self.liney)
         self.line.set_color("red")
         self.line.set_linewidth(2.0)
         self.line.set_linestyle('-')
-        self.line.figure.canvas.draw()   
+        self.line.figure.canvas.draw()
 
-
-    
         # Annotation
         self.canvas.ax.set_xlabel('Time (s)')
         self.canvas.ax.set_ylabel('Power (dB) ')
-       # self.canvas.ax.set_title('Click and drag a line using the mouse, to measure RT60')
 
         # Actually draw everything
         self.canvas.draw()
-
