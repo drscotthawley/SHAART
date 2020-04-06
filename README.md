@@ -26,7 +26,7 @@ SHAART Acoustic Tools, v 0.7<br>
 <a href="#downloads">Downloads</a> &nbsp;&nbsp;
 <a href="#license">License</a> &nbsp;&nbsp;
 <a href="#tutorial">Tutorial(s)</a> &nbsp;&nbsp;
-<a href="#screenshots">Screenshots</a> &nbsp;&nbsp;
+<a href="#screenshots">Screenshots</a> &nbsp;&nbsp;<br>
 <a href="#source">Running From Source</a>  &nbsp;&nbsp;
 <a href="#build">Building an Executable</a>  &nbsp;&nbsp;
 <a href="#faq">FAQ</a> &nbsp;&nbsp;
@@ -53,7 +53,7 @@ The name "SHAART" uses the author's initials (S.H.) in homage to the famous "SMA
 
 Most of these features are illustrated in the <a href="#screenshots">Screenshots</a> section further down this page.
 
-* **RT60 Measurement:** The reason SHAART was written in the first place.  Load an audio file, filter in different octave bands, draw a "best fit" line on the graph by hand, read off the reverb time.  (Designed to mimic functionality of SMAART Acoustics Tools(tm).)  Can show two files ("File A" and "File B") at once.  See "Tutorial(s)" below for a demo.
+* **Reverberation Time (RT60) Measurement:** The reason SHAART was written in the first place.  Load an audio file, filter in different octave bands, draw a "best fit" line on the graph by hand, read off the reverb time.  (Designed to mimic functionality of SMAART Acoustics Tools(tm).)  Can show two files ("File A" and "File B") at once.  See "Tutorial(s)" below for a demo.
 * **Waveform Display:** Linear scale only.  Displays two waveforms ("File A" and "File B") at once.
 * **Power Spectrum:** Pretty standard display Doesn't do a log scale yet, though I'd like to add that.  Displays two spectra ("File A" and "File B" at once.)
 * **Spectrogram:**  Shows magnitude as color, vs frequency and time. as with Power Spectrum.  Offers a few colormaps.  No log freq scale yet.  Only one file ("File A") shown.
@@ -93,13 +93,13 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 
 ## Tutorial(s)
 
-* **How to use the App:**  Go up to the "File" tab and select a WAV file to analyze.
+* **General Instructions:**  Go up to the "File" tab and select an audio file to analyze.
 
-  Note: You don't need a WAV file to use the room mode calculator.
+  **TODO:** Add more here
 
-*  **TODO:** Measuring Reverb Times with SHAART(docs/rt60.html)
+* [Measuring Reverb Times with SHAART](docs/rt60.html)
 
-* [Creating Impulse Responses with SHAART](docs/ir.html)
+* [Creating Impulse Responses with SHAART](docs/ir.md)
 
 
 
