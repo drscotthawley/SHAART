@@ -9,7 +9,7 @@ import FigureCanvasQTAgg as FigureCanvas
 # Matplotlib Figure object
 from matplotlib.figure import Figure
 
-from matplotlib import cm 
+from matplotlib import cm
 import matplotlib.mlab as mlab
 
 import numpy as np
@@ -55,7 +55,7 @@ class WaterWidget(QtWidgets.QWidget):
 
            # set the layout to th vertical box
            self.setLayout(self.vbl)
-  
+
 
       def update_graph(self,amp,sample_rate):
            """Updates the graph with new data/annotations"""
@@ -83,8 +83,7 @@ class WaterWidget(QtWidgets.QWidget):
            cstride = 10            # stride in time indices
            rstride = X.shape[0]    # stride in frequency indices
            maxn = 1000  # say we can reasonably handle a maxn values, beyond that, we reduce
-           if X.shape[1] > maxn:  cstride = 10* X.shape[1] / maxn
-           #print "rstride, cstride = ",rstride,cstride
+           if X.shape[1] > maxn:  cstride = 10* X.shape[1] // maxn
           # self.canvas.ax.plot_surface(X,Y,Z,rstride=rstride, cstride=cstride, alpha=1.0, cmap=cm.Blues)
            self.canvas.ax.plot_surface(X,Y,Z,rstride=rstride, cstride=cstride, cmap=cm.Blues)
 
@@ -94,5 +93,3 @@ class WaterWidget(QtWidgets.QWidget):
 
            """Actually draw everything"""
            self.canvas.draw()
-
-
