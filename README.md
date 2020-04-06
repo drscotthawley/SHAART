@@ -97,7 +97,7 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 
   **TODO:** Add more here
 
-* [Measuring Reverb Times with SHAART](docs/rt60.html)
+* [Measuring Reverb Times with SHAART](docs/rt60.md)
 
 * [Creating Impulse Responses with SHAART](docs/ir.md)
 
