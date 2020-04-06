@@ -1,24 +1,25 @@
 <head>
 <link rel="SHORTCUT ICON" href="shaart_logo.jpg" />
-<link rel="image_src" href="http://hedges.belmont.edu/~shawley/SHAART/shaart_logo.jpg" />
-<meta property="og:image" content="http://hedges.belmont.edu/~shawley/SHAART/shaart_logo.jpg" />
+<link rel="image_src" href="http://hedges.belmont.edu/~shawley/SHAART/images/shaart_logo.jpg" />
+<meta property="og:image" content="http://hedges.belmont.edu/~shawley/SHAART/images/shaart_logo.jpg" />
 <meta property="og:url" content="http://hedges.belmont.edu/~shawley/SHAART" />
 <meta property="og:title" content="SHAART Acoustic Tools" />
-<meta property="og:image" content="http://hedges.belmont.edu/~shawley/SHAART/screenshots/rt60.jpg">
+<meta property="og:image" content="http://hedges.belmont.edu/~shawley/SHAART/images/rt60.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://hedges.belmont.edu/~shawley/SHAART/screenshots/rt60.jpg">
+<meta name="twitter:image" content="http://hedges.belmont.edu/~shawley/SHAART/images/rt60.png">
 <meta keywords="audio acoustics analysis python education">
 </head>
 <body>
 
 # SHAART Acoustic Tools
 
-Main web page: http://hedges.belmont.edu/~shawley/SHAART/index.html
+Main web page: http://hedges.belmont.edu/~shawley/SHAART<br>
+GitHub page: http://github.com/drscotthawley/SHAART<br>
 
 <p align="center">
 SHAART Acoustic Tools, v 0.7<br>
-(April 5, 2020)<br>
-<img src="http://hedges.belmont.edu/~shawley/SHAART/shaart_logo.jpg"><br>
+(April 6, 2020)<br>
+<img src="images/shaart_logo.jpg"><br>
 (yes, the name is a joke)<br>
 <a href="#about">About</a> &nbsp;&nbsp;
 <a href="#features">Features</a> &nbsp;&nbsp;
@@ -32,6 +33,7 @@ SHAART Acoustic Tools, v 0.7<br>
 <a href="#notes">Release Notes</a> &nbsp;&nbsp;
 <br><br>
 </p>
+
 
 
 <a name="about"></a>
@@ -70,10 +72,10 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 
 * [Mac Binary application](https://hedges.belmont.edu/~shawley/SHAART/SHAART.app.tar.gz) (337 MB)
 
-*  [Windows executable](https://drive.google.com/open?id=1_dLPRHdfoqchFtglIbRrqDvwV37Npbhb) (361 MB). Note that the Windows EXE takes *a while* to come up when you first run it.
+*  [Windows executable](https://drive.google.com/open?id=1Uui3-MYnnKWeCFG181jmMPeGF2YPwPVP) (361 MB). Note that the Windows EXE takes *a while* to come up when you first run it.
 * [Linux executable](https://drive.google.com/file/d/1uE_1x8ZCXI1bpQY5EamCEqUT2PUCLzYg/view?usp=sharing) (132 MB, Pop!\_OS / Ubuntu).  You can also <a href="#source">run from source</a> (below)
-* [Source code](https://hedges.belmont.edu/~shawley/SHAART/SHAART.tar.gz) (in Python)  See <a href="#source">Running From Source</a> below for further instructions.
-* [Sample WAV file](https://hedges.belmont.edu/~shawley/SHAART/sample_data.wav)
+* [Source code (GitHub)](http://github.com/drscotthawley/SHAART) (in Python)  See <a href="#source">Running From Source</a> below for further instructions.
+* [Sample WAV file](audio/sample_data.wav)
 
 
 
@@ -95,9 +97,9 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 
   Note: You don't need a WAV file to use the room mode calculator.
 
-*  **TODO:** Measuring Reverb times with SHAART
+*  **TODO:** Measuring Reverb Times with SHAART(docs/rt60.html)
 
-* [Creating Impulse Responses with SHAART](ir.html)
+* [Creating Impulse Responses with SHAART](docs/ir.html)
 
 
 
@@ -105,35 +107,36 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 
 ## Screenshots
 
-<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/rt60.png" width=600><br>
-<br>
-<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/power.png" width=600><br>
-<br>
-<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/spectro.png" width=600><br>
-<br>
-<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/waterfall.png" width=600><br>
-<br>
-<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/modes.png" width=600><br>
-<br>
-<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/sabine.png" width=600><br>
-<br>
-<img src="http://hedges.belmont.edu/~shawley/SHAART/screenshots/invspectro.jpg" width=600><br>
-<br>
-invSpectro (above) created the file [mandrill.wav](https://hedges.belmont.edu/~shawley/SHAART/mandrill.wav) which has a spectrogram shown below:
+![rt60](images/rt60.png)
 
-<img src="https://hedges.belmont.edu/~shawley/SHAART/screenshots/mandrill_spectro.png" width=600><br>
+![power](images/power.png)
+
+![spectro](images/spectro.png)
+
+![waterfall](images/waterfall.png)
+
+![modes](images/modes.png)
+
+![sabine](images/sabine.png)
+
+
+<br>
+The "invSpectro" feature created the file [mandrill.wav](audio/mandrill.wav) which has a spectrogram shown below:
+
+![mandrill_spectro](images/mandrill_spectro.png)
 <br>
 And interestingly, if the audio is encoded as an MP3, then re-read and re-written as a WAV, one can see the "lossyness" of the MP3:<br>
-<img src="https://hedges.belmont.edu/~shawley/SHAART/screenshots/mandrill_mp3_to_wav.png" width=600><br>
+![mandrill_mp3](images/mandrill_mp3_to_wav.png)
 <br>
-One can also apply various audio plugins to the sound and see the effect on the image, e.g. echo:<br>
-<img src="https://hedges.belmont.edu/~shawley/SHAART/screenshots/mandrill_echo.png" width=600><br>
-Wah-wah:<br>
-<img src="https://hedges.belmont.edu/~shawley/SHAART/screenshots/mandrill_wahwah.png" width=600><br>
-Reverb:<br>
-<img src="https://hedges.belmont.edu/~shawley/SHAART/screenshots/mandrill_reverb.png" width=600><br>
+One can also apply various audio effects to the sound and see the effect on the image, e.g. echo:<br>
+![echo](images/mandrill_echo.png)
+
+![wah](images/mandrill_wahwah.png)
+
+![reverb](images/mandrill_reverb.png)
+
 And here's an interesting one: a "leveler" effect:<br>
-<img src="https://hedges.belmont.edu/~shawley/SHAART/screenshots/mandrill_leveler.png" width=600><br>
+![leveler](images/mandrill_leveler.png)
 <br>
 
 <a name="source"></a>
@@ -162,7 +165,7 @@ First follow the instructions above for running from source using `pyinstaller`,
 conda install -c conda-forge pyinstaller
 ```
 
-And (because of conflicts) downgrade setuptools too, via `pip`: 
+And (because of conflicts) downgrade setuptools too, via `pip`:
 
 ```bash
 pip install --upgrade 'setuptools<45.0.0'`
@@ -181,10 +184,10 @@ pyinstaller SHAART.spec --specpath=test
 
 ### Linux (Pop!\_OS / Ubuntu)
 
-There's some conflict between `numba` and `librosa` and `pyinstaller`, and it's currently understood how to best resolve that yet.  So for now, the solution is to remove `numba` and re-install `librosa`and then build: 
+There's some conflict between `numba` and `librosa` and `pyinstaller`, and it's currently understood how to best resolve that yet.  So for now, the solution is to remove `numba` and re-install `librosa`and then build:
 
 ```
-conda remove numba 
+conda remove numba
 conda install -c conda-force librosa pyinstaller
 pyinstaller SHAART.spec --specpath=test
 ```
@@ -239,7 +242,7 @@ pyuic5 -x ui_shaart.ui -o ui_shaart.py
 * Can it only read WAV files?  No.  Despite saying WAV file everywhere, the newest version of SHAART will read AIFF files too.  (And any previous issues with reading 24-bit PCM WAV files has been resolved.)
 * Can I get a logarithmic frequency scale for the spectrogram?  Not yet, but soon.
 * For waterfall plots, it doesn't clear the window if you change the input data, resulting in multiple plots on the same page.  Bug or feature?
-* Does the "Record" feature work?  Not yet. Use Audacity or....any other utility to record. ;-) 
+* Does the "Record" feature work?  Not yet. Use Audacity or....any other utility to record. ;-)
 * How do I contribute to SHAART?  Submit a Pull Request!
 
 <a name="notes"></a>
@@ -289,7 +292,7 @@ Rational Acoustics, fyi.)  ...I mean, "SHAART" is just hilarious to say.
 
 Author: Dr. Scott H. Hawley, Associate Professor of Physics,
         Belmont University, Nashville TN USA.  
-Date:   April 2, 2020 (original March 24, 2013)
+Date:   April 6, 2020 (original March 24, 2013)
 
 Contact:  Improvements, bug reports, inquiries, donations, etc.: scott.hawley@(belmont)
 
