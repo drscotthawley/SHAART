@@ -1,6 +1,6 @@
 # Creating Impulse Responses with SHAART
 
-<a href="../index.html#downloads">Download SHAART</a>.
+<a href="https://hedges.belmont.edu/~shawley/SHAART/index.html#downloads">Download SHAART</a>.
 
 Sure, you could press a button and have Room Eq Wizard or FuzzMeasure or Logic do it for you, but what if you want to "see under the hood" a bit, to learn what's really going on?   Here we follow the now-ubiquitous method (and ISO standard) of Farina [1].
 
