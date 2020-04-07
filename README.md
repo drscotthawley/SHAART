@@ -97,9 +97,9 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 
   **TODO:** Add more here
 
-* [Measuring Reverb Times with SHAART](docs/rt60.md)
+* [Measuring Reverb Times with SHAART](https://github.com/drscotthawley/SHAART/blob/master/docs/rt60.md)
 
-* [Creating Impulse Responses with SHAART](docs/ir.md)
+* [Creating Impulse Responses with SHAART](https://github.com/drscotthawley/SHAART/blob/master/docs/ir.md)
 
 
 
@@ -244,7 +244,8 @@ pyuic5 -x ui_shaart.ui -o ui_shaart.py
 
 ## FAQ
 
-* Can it only read WAV files?  No.  Despite saying WAV file everywhere, the newest version of SHAART will read AIFF files too.  (And any previous issues with reading 24-bit PCM WAV files has been resolved.)
+* You do realize what the name "SHAART" sounds like...?  See "About" above.  thatsthejoke.jpg
+* Can it only read WAV files?  No.  Despite saying WAV file everywhere, version 0.7 can read anything [librosa](https://librosa.github.io/librosa/) can read, which is...pretty much anything, e.g. WAV, AIFF, M4A,...?
 * Can I get a logarithmic frequency scale for the spectrogram?  Not yet, but soon.
 * For waterfall plots, it doesn't clear the window if you change the input data, resulting in multiple plots on the same page.  Bug or feature?
 * Does the "Record" feature work?  Not yet. Use Audacity or....any other utility to record. ;-)
