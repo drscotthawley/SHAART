@@ -1,17 +1,17 @@
-# Python Qt4 bindings for GUI objects
+# Python Qt5 bindings for GUI objects
 from PyQt5 import QtGui, QtWidgets
 
-# import the Qt4Agg FigureCanvas object, that binds Figure to
-# Qt4Agg backend. It also inherits from QWidget
-from matplotlib.backends.backend_qt4agg \
+# import the Qt5Agg FigureCanvas object, that binds Figure to
+# Qt5Agg backend. It also inherits from QWidget
+from matplotlib.backends.backend_qt5agg \
 import FigureCanvasQTAgg as FigureCanvas
 
 # Matplotlib Figure object
 from matplotlib.figure import Figure
 
-from matplotlib import cm 
+from matplotlib import cm
 import matplotlib.mlab as mlab
-from matplotlib.backends.backend_qt4 import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
 
 
 import numpy as np
@@ -73,7 +73,7 @@ class ModeGraphWidget(QtWidgets.QWidget):
 
            # set the layout to th vertical box
            self.setLayout(self.vbl)
-  
+
 
       def plot_mode(self, f0, deltaf, modetype, sums):
            n = 200
@@ -92,19 +92,19 @@ class ModeGraphWidget(QtWidgets.QWidget):
            else:                          # oblique modes
              colorstr = color_oblique
              dB = [x - 1 for x in dB]
-        
+
            modeshape = [10.0**x for x in dB]
-        
+
            #line, = ax.plot(f, np.ma.log10(modeshape), colorstr)  # plot the mode shape itself
            # make a tiny tick mark for the mode
-            
+
            ticklen = 2
            tickfs = [f0,f0]
            if0 = len(f)/2
            tickstart = 7 - 2*modetype
            tickps = [tickstart, tickstart + ticklen]
            line2, = self.canvas.ax.plot(tickfs, tickps, colorstr)  # draw a tick at the mode frequency
-        
+
            if sums is not None:
               #ifsave = 0           # this was used to prevent double-counting #TODO: <--- This is wrong! Double counting is good!
               for i in range(len(f)):
@@ -128,14 +128,14 @@ class ModeGraphWidget(QtWidgets.QWidget):
            dB_max = 10
            sums = np.zeros(sum_fmax)
 
-           for m in modes: 
+           for m in modes:
                numzeros = m.count(0)
                f0 = m[0]
-               rt60 = 0.4 
+               rt60 = 0.4
                deltaf = 2.2/rt60
                self.plot_mode(f0, deltaf, numzeros, sums)
-        
-        
+
+
            line2, = self.canvas.ax.plot(range(len(sums)), np.ma.log10(sums), 'k')
 
            pl = self.canvas.ax
@@ -147,7 +147,7 @@ class ModeGraphWidget(QtWidgets.QWidget):
            title = "Theoretical Steady-State Room Response"
            self.canvas.ax.set_title(title)
            pl.grid(True)
-           
+
            # cheap hack to make a legend
            xs = [sum_fmax]
            ys = [dB_min]
@@ -157,9 +157,7 @@ class ModeGraphWidget(QtWidgets.QWidget):
            l1 = self.canvas.ax.legend([pA,pB,pC], ['axial modes','tangential modes','oblique modes'], loc=4)
            l1.draw_frame(False)                   # no box around the legend
 
-           
+
 
            """Actually draw everything"""
            self.canvas.draw()
-
-

@@ -1,15 +1,15 @@
-# Python Qt4 bindings for GUI objects
+# Python Qt bindings for GUI objects
 from PyQt5 import QtGui, QtWidgets
 
-# import the Qt4Agg FigureCanvas object, that binds Figure to
-# Qt4Agg backend. It also inherits from QWidget
-from matplotlib.backends.backend_qt4agg \
+# import the Qt5Agg FigureCanvas object, that binds Figure to
+# Qt5Agg backend. It also inherits from QWidget
+from matplotlib.backends.backend_qt5agg \
 import FigureCanvasQTAgg as FigureCanvas
 
 # Matplotlib Figure object
 from matplotlib.figure import Figure
 
-from matplotlib.backends.backend_qt4 import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
 
 import numpy as np
 import scipy.signal as signal
@@ -81,7 +81,7 @@ class WaveformWidget(QtWidgets.QWidget):
            instr = "%s" % instr           # just to make sure it's of the right 'type'
            outstr = path.basename(instr)
            match = re.match(r"(.*)\.wav",outstr)    # take out the .wav if possible
-           if (match is not None): 
+           if (match is not None):
               outstr = match.group(1)
            return outstr
 
@@ -105,7 +105,7 @@ class WaveformWidget(QtWidgets.QWidget):
                 ds_amp = np.abs(ds_amp)
 
            if env_checked:
-                env = np.abs(sigtool.hilbert(ds_amp)) 
+                env = np.abs(sigtool.hilbert(ds_amp))
                 ds_amp = env
                 #ds_t = np.arange(0,len(env),t[1])
 
@@ -117,11 +117,11 @@ class WaveformWidget(QtWidgets.QWidget):
 #           self.canvas.ax.axis([10,ds_t[-1],minval,0])
 #           self.canvas.ax.set_xscale("log", nonposx='clip')
 
-    
+
            # Annotation
            self.canvas.ax.set_xlabel('Time (s)')
            self.canvas.ax.set_ylabel('Displacement')
-  
+
            return p
 
 
@@ -129,7 +129,7 @@ class WaveformWidget(QtWidgets.QWidget):
            self.canvas.ax.clear()
            p1, = self.draw_graph(amp,t,"blue",abs_checked,env_checked)
            leg_fA = self.legend_string(filenameA)
-           
+
            if (ampB is not None) & (len(ampB) > 1):
               p2, = self.draw_graph(ampB,tB,"purple",abs_checked,env_checked)
               leg_fB = self.legend_string(filenameB)
@@ -138,8 +138,6 @@ class WaveformWidget(QtWidgets.QWidget):
               l1 = self.canvas.ax.legend([p1], [leg_fA], loc=3)
 
            l1.draw_frame(False)                   # no box around the legend
-           
+
            # Actually draw everything
            self.canvas.draw()
-  
-

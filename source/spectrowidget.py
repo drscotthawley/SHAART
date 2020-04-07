@@ -1,16 +1,16 @@
-# Python Qt4 bindings for GUI objects
+# Python Qt5 bindings for GUI objects
 from PyQt5 import QtGui, QtWidgets
 
-# import the Qt4Agg FigureCanvas object, that binds Figure to
-# Qt4Agg backend. It also inherits from QWidget
-from matplotlib.backends.backend_qt4agg \
+# import the Qt5Agg FigureCanvas object, that binds Figure to
+# Qt5Agg backend. It also inherits from QWidget
+from matplotlib.backends.backend_qt5agg \
 import FigureCanvasQTAgg as FigureCanvas
 
 # Matplotlib Figure object
 from matplotlib.figure import Figure
 
-from matplotlib.backends.backend_qt4 import NavigationToolbar2QT as NavigationToolbar
-from matplotlib import cm 
+from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
+from matplotlib import cm
 
 
 import numpy as np
@@ -81,10 +81,10 @@ class SpectroWidget(QtWidgets.QWidget):
 
 
            Pxx, freqs, bins, im = self.canvas.ax.specgram(amp, NFFT=NFFT, Fs=1.0*sample_rate, noverlap=900
-               #)#  ,cmap=cm.gray) 
+               #)#  ,cmap=cm.gray)
                # ,cmap=cm.Blues)  # color map
                 ,cmap=colormap)  # color map
- 
+
            # Annotation
            self.canvas.ax.set_xlabel('Time (s)')
            self.canvas.ax.set_ylabel('Frequency (Hz) ')
@@ -92,6 +92,3 @@ class SpectroWidget(QtWidgets.QWidget):
 
            # Actually draw everything
            self.canvas.draw()
-
-
-

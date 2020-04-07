@@ -1,13 +1,13 @@
-# Python Qt4 bindings for GUI objects
+# Python Qt5 bindings for GUI objects
 from PyQt5 import QtGui, QtWidgets
 
-from matplotlib.backends.backend_qt4agg \
+from matplotlib.backends.backend_qt5agg \
 import FigureCanvasQTAgg as FigureCanvas
 
 # Matplotlib Figure object
 from matplotlib.figure import Figure
 
-from matplotlib.backends.backend_qt4 import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
 
 import numpy as np
 import scipy.signal as signal

@@ -1,17 +1,17 @@
 # Sabine Equation / Room simulation tab
 
-# Python Qt4 bindings for GUI objects
+# Python Qt5 bindings for GUI objects
 from PyQt5 import QtGui, QtWidgets
 
-# import the Qt4Agg FigureCanvas object, that binds Figure to
-# Qt4Agg backend. It also inherits from QWidget
-from matplotlib.backends.backend_qt4agg \
+# import the Qt5Agg FigureCanvas object, that binds Figure to
+# Qt5Agg backend. It also inherits from QWidget
+from matplotlib.backends.backend_qt5agg \
 import FigureCanvasQTAgg as FigureCanvas
 
 # Matplotlib Figure object
 from matplotlib.figure import Figure
 
-from matplotlib.backends.backend_qt4 import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
 
 import numpy as np
 import scipy.signal as signal
@@ -43,7 +43,7 @@ class RcGraphWidget(QtWidgets.QWidget):
       def __init__(self, parent = None):
            # initialization of Qt MainWindow widget
            QtWidgets.QWidget.__init__(self, parent)
- 
+
            # set the canvas to the Matplotlib widget
            self.canvas = RcGraphCanvas()
 
@@ -63,9 +63,9 @@ class RcGraphWidget(QtWidgets.QWidget):
 
            #Absorption coefficients, in Sabines/ft^2
            self.abs_freqs   =  np.array([125.0,  500.0,  1000.0, 2000.0])  # in Hz
-           abs_concrete = np.array([0.01, 0.02, 0.02, 0.02])       
-           abs_glass    = np.array([0.19, 0.06, 0.04, 0.03])      
-           abs_plaster  = np.array([0.20, 0.10, 0.08, 0.04])     
+           abs_concrete = np.array([0.01, 0.02, 0.02, 0.02])
+           abs_glass    = np.array([0.19, 0.06, 0.04, 0.03])
+           abs_plaster  = np.array([0.20, 0.10, 0.08, 0.04])
            abs_plywood  = np.array([0.45, 0.13, 0.11, 0.10])
            abs_carpet   = np.array([0.10, 0.30, 0.35, 0.50])
            abs_curtains = np.array([0.05, 0.25, 0.35, 0.40])
@@ -97,11 +97,11 @@ class RcGraphWidget(QtWidgets.QWidget):
            lwall_mi = main.lwallcomboBox.currentIndex()
            rwall_mi = main.rwallcomboBox.currentIndex()
 
-           
-           
+
+
            # do nothing for bad input
            if (""==ss_text) | (""==x_text) | (""==y_text) | (""==z_text) | (""==adults_text): return
- 
+
            # Parse the text info
            vs = float(ss_text)
            x = float(x_text)
@@ -109,9 +109,9 @@ class RcGraphWidget(QtWidgets.QWidget):
            z = float(z_text)
            adults = float(adults_text)
            volume = x * y * z
-           self.areas = [ x*y, x*y, x*z, x*z, y*z, y*z ] 
-           surf_materials = [ floor_mi, ceiling_mi, fwall_mi, bwall_mi, lwall_mi, rwall_mi] 
-  
+           self.areas = [ x*y, x*y, x*z, x*z, y*z, y*z ]
+           surf_materials = [ floor_mi, ceiling_mi, fwall_mi, bwall_mi, lwall_mi, rwall_mi]
+
            #print "vs, x, y, z = ", vs, x, y, z
            #print "areas = ",self.areas
 
@@ -125,8 +125,8 @@ class RcGraphWidget(QtWidgets.QWidget):
                    surf_coeffs = self.abs_coeffs[surf_materials[surf]]
                    sabines = sabines + self.areas[surf]* surf_coeffs[f_ind]
 
-               rtimes[f_ind] = 0.050 * 1140.0/vs * volume / sabines 
-  
+               rtimes[f_ind] = 0.050 * 1140.0/vs * volume / sabines
+
            #print "freqs = ",self.abs_freqs
            #print "rtimes = ",rtimes
 
@@ -142,4 +142,3 @@ class RcGraphWidget(QtWidgets.QWidget):
 
            # Actually draw everything
            self.canvas.draw()
-

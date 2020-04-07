@@ -22,8 +22,7 @@ import scipy.io.wavfile as wavfile
 import librosa
 import scipy.signal as signal
 import pylab as pl
-#from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
-from matplotlib.backends.backend_qt4 import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
 import re
 from PIL import Image    #import Image   # cleaned this up
 from scipy import zeros, ifft

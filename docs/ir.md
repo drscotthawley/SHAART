@@ -24,9 +24,7 @@ Sure, you could press a button and have Room Eq Wizard or FuzzMeasure or Logic d
 
    ...and press Go.   This will go into "File A" in SHAART.
 
-4. Load the response WAV file into "File B" in SHAART.
-
-   A comparison of the two files now in memory will look like this:
+4. Load the response WAV file into "File B" in SHAART.  A comparison of the two waveforms now in memory will look like this:
    ![ir_sweep_and_inv](ir_sweep_and_inv_waveform.png)
 
 5. Go to the "Convolve" tab and simply press "Go".  (No other instructions or actions are necessary.  Do not time-reverse file A).
@@ -45,7 +43,7 @@ If we use the "original" (constant-amplitude, forward) sine sweep and convolve i
 3. Load back the original sweep file as File B.  (Take a look in the Waveform display. You should see something similar to the screenshot shown in Step 4 above.)
 4. Go the Convolve tab and press the big "GO!" button. 
 5. Go back to the waveform display to see this 'spike': ![ir_delta](ir_delta.png)...which is not quite perfect but pretty 'impulsive'!
-6. Check the power spectrum: is it flat? Press the Power tab to see this: ![ir_power](ir_power.png) ...pretty flat, eh? ;-) 
+6. Check the power spectrum: Is it flat? Press the Power tab to see this: ![ir_power](ir_power.png) ...pretty flat, eh? ;-)   *(And if you change the equations to run from 10 Hz to 22 kHz instead of 20 to 20k it'll look even flatter, but there's not really a point to that because you won't be measuring RT60 in those extra frequency ranges.)*
 
 ## References:
 

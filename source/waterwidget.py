@@ -1,9 +1,9 @@
-# Python Qt4 bindings for GUI objects
+# Python Qt5 bindings for GUI objects
 from PyQt5 import QtGui, QtWidgets
 
-# import the Qt4Agg FigureCanvas object, that binds Figure to
-# Qt4Agg backend. It also inherits from QWidget
-from matplotlib.backends.backend_qt4agg \
+# import the Qt5Agg FigureCanvas object, that binds Figure to
+# Qt5Agg backend. It also inherits from QWidget
+from matplotlib.backends.backend_qt5agg \
 import FigureCanvasQTAgg as FigureCanvas
 
 # Matplotlib Figure object
