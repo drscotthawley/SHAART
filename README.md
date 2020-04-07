@@ -170,7 +170,7 @@ conda install -c conda-forge librosa pyqt pillow pyaudio
 
 ## Building an Executable
 
-First follow the instructions above for running from source using `pyinstaller`, that will create a new directory called `SHAART/source/dist/`, **in which a successful build will result in the presence of working binary executable.**
+First follow the instructions above for running from source. Then we will proceed by using `pyinstaller`, that will create a new directory called `SHAART/source/dist/`, **in which a successful build will result in the presence of working binary executable.**
 
 ```bash
 conda install -c conda-forge pyinstaller
@@ -184,7 +184,7 @@ pip install --upgrade 'setuptools<45.0.0'`
 
 ### Mac
 
-In order to run from source, you'd already need to have XCode, the command-line tools, and HomeBrew installed. Then in we install `python.app` and [an older versions of a few things](https://github.com/pyinstaller/pyinstaller/issues/4067), and build the app:
+In order to run from source, you'd already need to have XCode, the command-line tools, and HomeBrew installed. Then in we install `python.app` and [an older versions of a few things](https://github.com/pyinstaller/pyinstaller/issues/4067) to build the app:
 
 ```bash
 conda install -c conda-forge python.app joblib=0.11 scikit-learn=0.21.3 librosa=0.6.1
@@ -201,7 +201,7 @@ We *could* re-use the .spec file from the Mac build, but it would give us a whol
 pyinstaller -w --icon=SHAART.icns --hidden-import="sklearn.utils._cython_blas" --hidden-import="sklearn.neighbors._typedefs" --hidden-import="sklearn.neighbors.quad_tree" --hidden-import="sklearn.tree._utils" --onefile SHAART.py
 ```
 
-...And then you can just run the `dist/SHAART` executable from the command line.   Note: I can't seem to get it to be a "clickable icon" in Nautilus/Gnome.  Not sure how to do that.
+...And then you can just run the `dist/SHAART` executable from the command line.   (Note: I can't seem to get it to be a "clickable icon" in Nautilus/Gnome.  Not sure how to do that.)
 
 ### Windows
 
