@@ -39,10 +39,21 @@ Sure, you could press a button and have Room Eq Wizard or FuzzMeasure or Logic d
 If we use the "original" (constant-amplitude, forward) sine sweep and convolve it with its "inverse" (exponential-amplitude, backward) sweep, in theory we should get a Dirac delta function (i.e. a "spike") in time and a flat power spectrum.  Let's check:
 
 1. As in Step 1 above, use the Equation feature to generate the forward sweep as File A and save it to a file: `sweep.wav`. 
+
 2. As in Step 3 above, use the Equation feature to generate the 'Inverse filter' as File A (i.e. overwrite what's there), and keep it there.
+
 3. Load back the original sweep file as File B.  (Take a look in the Waveform display. You should see something similar to the screenshot shown in Step 4 above.)
+
 4. Go the Convolve tab and press the big "GO!" button. 
-5. Go back to the waveform display to see this 'spike': ![ir_delta](ir_delta.png)...which is not quite perfect but pretty 'impulsive'!
+
+5. Go back to the waveform display to see this 'spike': ![ir_delta](ir_delta.png)...which is not quite perfect but pretty 'impulsive'!  If we look at it on a dB scale (go to the RT60 tab), we see...
+
+   ![ir_delta_pwr](ir_delta_pwr.png)
+
+   ...Defects include the "blip" on the left, and an asymmetry that shows up about 50dB lower than the maximum. I'll look into those.   The spectrogram looks like this:
+
+   ![ir_spectrogram](ir_spectrogram.png)**TODO:** Feature Request: add a color bar to the side of the plot so we know the scale of the colors. 
+
 6. Check the power spectrum: Is it flat? Press the Power tab to see this: ![ir_power](ir_power.png) ...pretty flat, eh? ;-)   *(And if you change the equations to run from 10 Hz to 22 kHz instead of 20 to 20k it'll look even flatter, but there's not really a point to that because you won't be measuring RT60 in those extra frequency ranges.)*
 
 ## References:
