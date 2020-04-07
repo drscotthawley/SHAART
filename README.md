@@ -73,7 +73,7 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 * [Mac Binary application](https://hedges.belmont.edu/~shawley/SHAART/SHAART.app.tar.gz) (337 MB)
 
 *  [Windows executable](https://hedges.belmont.edu/~shawley/SHAART/SHAART.exe) (361 MB). Note that the Windows EXE takes *a while* to come up when you first run it.
-* [Linux executable](https://drive.google.com/file/d/1uE_1x8ZCXI1bpQY5EamCEqUT2PUCLzYg/view?usp=sharing) (132 MB, Pop!\_OS / Ubuntu).  You can also <a href="#source">run from source</a> (below)
+* [Linux executable](https://hedges.belmont.edu/~shawley/SHAART/SHAART_Linux) (132 MB, Pop!\_OS / Ubuntu).  You can also <a href="#source">run from source</a> (below)
 * [Source code (GitHub)](http://github.com/drscotthawley/SHAART) (in Python)  See <a href="#source">Running From Source</a> below for further instructions.
 * [Sample WAV file](audio/sample_data.wav)
 
@@ -195,12 +195,10 @@ pyinstaller SHAART.spec --specpath=test
 
 ### Linux (Pop!\_OS / Ubuntu)
 
-There's some conflict between `numba` and `librosa` and `pyinstaller`, and it's currently understood how to best resolve that yet.  So for now, the solution is to remove `numba` and re-install `librosa`and then build:
+We *could* re-use the .spec file from the Mac build, but it would give us a whole directory instead of one executable.  Instead, run this line:
 
-```
-conda remove numba
-conda install -c conda-force librosa pyinstaller
-pyinstaller SHAART.spec --specpath=test
+```bash
+pyinstaller -w --icon=SHAART.icns --hidden-import="sklearn.utils._cython_blas" --hidden-import="sklearn.neighbors._typedefs" --hidden-import="sklearn.neighbors.quad_tree" --hidden-import="sklearn.tree._utils" --onefile SHAART.py
 ```
 
 ...And then you can just run the `dist/SHAART` executable from the command line.   Note: I can't seem to get it to be a "clickable icon" in Nautilus/Gnome.  Not sure how to do that.
@@ -234,7 +232,7 @@ Here are the steps taken to build the Window EXE:
 
 ## Changing the GUI
 
-Run QT5's `designer` (or `Designer`) app using `ui_shaart.ui` as an input.  Change the GUI as you like, save it, and then to generate the .py file, run
+Run QT5's `designer` or `Designer` app ([good luck finding this on your hard drive](https://stackoverflow.com/questions/37419138/is-qt-designer-bundled-with-anaconda), btw;  instead you might want to just [download QT from the main site](https://www.qt.io/)).  Open `ui_shaart.ui` as an input file.  Change the GUI as you like, save it, and then to generate the .py file, run
 
 ```bash
 pyuic5 -x ui_shaart.ui -o ui_shaart.py
