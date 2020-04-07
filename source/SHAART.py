@@ -125,6 +125,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         global sample_rate, orig_amp
         filename = QtWidgets.QFileDialog.getSaveFileName(self,"Filename to Save to","",'WAV File Name (*.wav)')
         if filename != "":
+            filename = filename[0]  # Qt5 dialog returns a tuple
             # write to file
             #--------------
             wavfile.write(filename, sample_rate, amp)
