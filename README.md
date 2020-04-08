@@ -1,4 +1,5 @@
 <head>
+<title>SHAART Acoustic Tools</title>
 <link rel="SHORTCUT ICON" href="shaart_logo.jpg" />
 <link rel="image_src" href="http://hedges.belmont.edu/~shawley/SHAART/images/shaart_logo.jpg" />
 <meta property="og:image" content="http://hedges.belmont.edu/~shawley/SHAART/images/shaart_logo.jpg" />
@@ -9,6 +10,7 @@
 <meta name="twitter:image" content="http://hedges.belmont.edu/~shawley/SHAART/images/rt60.png">
 <meta keywords="audio acoustics analysis python education">
 </head>
+
 <body>
 
 # SHAART Acoustic Tools
@@ -54,7 +56,7 @@ The name "SHAART" uses the author's initials (S.H.) in homage to the famous "SMA
 
 Most of these features are illustrated in the <a href="#screenshots">Screenshots</a> section further down this page.
 
-* **Reverberation Time (RT60) Measurement:** The reason SHAART was written in the first place.  Load an audio file, filter in different octave bands, draw a "best fit" line on the graph by hand, read off the reverb time.  (Designed to mimic functionality of SMAART Acoustics Tools(tm).)  Can show two files ("File A" and "File B") at once.  See "Tutorial(s)" below for a demo.
+* **Reverberation Time (RT60) Measurement:** The reason SHAART was written in the first place.  Load an audio file, filter in different octave bands, draw a "best fit" line on the graph by hand, read off the reverb time.  (Designed to mimic functionality of SMAART Acoustics Tools(tm).)  Can show two files ("File A" and "File B") at once.  See <a href="#tutorial">Tutorials</a> for more on this feature.
 * **Waveform Display:** Linear scale only.  Displays two waveforms ("File A" and "File B") at once.
 * **Power Spectrum:** Pretty standard display Doesn't do a log scale yet, though I'd like to add that.  Displays two spectra ("File A" and "File B" at once.)
 * **Spectrogram:**  Shows magnitude as color, vs frequency and time. as with Power Spectrum.  Offers a few colormaps.  No log freq scale yet.  Only one file ("File A") shown.
@@ -63,7 +65,7 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 * **Room Mode Calculator:**  Uses the Rayleigh equation for standing waves of a 3D box, and also plots a "Fake Room Response" by assigning relative amplitudes to axial, tangential, and oblique modes.  Useful for demonstrating mode distributions for different room shapes.
 * **Sabine Equation Calculator:** Assumes a box-shaped room, lets you apply absorption to different surfaces.  Based on Chapter 8 of Berg & Stork textbook, including their table for absorption coefficients.
 * **Equation-to-Audio:** Specify a time-dependent function, and it'll generate audio from that. Useful for sine sweeps, e.g. for building impulse responses using Convolution (below)
-* **Convolution:** Convolve File A with File B.  Useful for making impulse responses from sine sweeps, or just for screwing around (e.g. convolving Led Zeppelin's "The Ocean" with the sound of a dog bark.)
+* **Convolution:** Convolve File A with File B.  Useful for making impulse responses from sine sweeps, or creating convolution reverb effects, or just for screwing around (e.g., convolving Led Zeppelin's "The Ocean" with the sound of a dog bark.)
 * **Play(/Record):** Very rudimentary.  Will play the audio out the speaker, with no controls.  Record doesn't work yet.
 
 <a name="downloads"></a>
@@ -126,7 +128,7 @@ Note: The following 'Theoretical Steady-Steate Room Response' is pretty fake; it
 
 
 
-The values of absorption coefficients for the Sabine calculator come from of the table in Chapter 8 of the Berg & Stork textbook:
+The values of absorption coefficients for the Sabine calculator come from the table in Chapter 8 of the Berg & Stork textbook:
 
 ![sabine](images/sabine.png)
 
