@@ -174,7 +174,9 @@ class Rt60Widget(QtWidgets.QWidget):
       def update_graph(self,amp,t,filenameA,ampB,tB, filenameB):
         """Updates the graph with new data/annotations"""
 
-        epsilon = 1.0e-8     # added to avoid log(0) errors
+        if len(amp) <= 1: return  # do nothing when there's nothing to graph
+
+        epsilon = 1.0e-8           # added to avoid log(0) errors
 
         # Compute the quantity to be plotted
         power = (amp + epsilon) **2

@@ -37,13 +37,12 @@ import time
 def butter_bandpass(lowcut, highcut, fs, order=5):
     nyq = 0.5 * fs
     low = lowcut / nyq
-    if (highcut > nyq):
-       highcut = nyq
-    high = highcut / nyq
+    high = highcut / nyq if highcut < nyq else 0.999   # avoid exceeding bounds
     b, a = signal.butter(order, [low, high], btype='band')
     return b, a
 
 def butter_bandpass_filter(data, lowcut, highcut, fs, order=5):
+    if len(data) <= 1: return data    # do nothing for no data
     b, a = butter_bandpass(lowcut, highcut, fs, order=order)
     y = signal.lfilter(b, a, data)
     return y
