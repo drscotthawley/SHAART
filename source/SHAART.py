@@ -20,6 +20,7 @@ from ui_shaart import Ui_TheMainWindow
 import scipy.io.wavfile as wavfile
 #from scikits.audiolab import Sndfile
 import librosa
+
 import scipy.signal as signal
 import pylab as pl
 from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
@@ -188,16 +189,12 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
     def select_read_img_file(self):
         # open the dialog and get the selected file
         file = QtWidgets.QFileDialog.getOpenFileName()
-        if file:
-            # update the lineEdit text with the selected filename
-            self.is_imname_lineEdit.setText(file)
+        if file: self.is_imname_lineEdit.setText(file[0]) # update the lineEdit text with the selected filename
 
     def select_write_wav_file(self):
         # open the dialog and get the selected file
         file = QtWidgets.QFileDialog.getSaveFileName()
-        if file:
-            # update the lineEdit text with the selected filename
-            self.is_wavname_lineEdit.setText(file)
+        if file: self.is_wavname_lineEdit.setText(file[0]) # update the lineEdit text with the selected filename
 
     #-----------------------------------------------------
     # In response to "Octave" comboBox trigger
@@ -330,7 +327,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
 
         ibuf = 0  # no buffer
         tbuf = 1.0 * ibuf / fs      # may seem redundant, but readable
-        x = zeros((T+2*tbuf)*fs)    # x is the time series data
+        x = np.zeros( int( (T+2*tbuf)*fs) )    # x is the time series data
         for ihop in range(nhops):
             for ifreq in range(nfreq):   #scan vertically upwards
                 freq = minfreq + ifreq * dfreq
@@ -371,27 +368,43 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         # Construct the signal. Put the image into X, transpose & flip, take its inverse stft
         #---------------------
         X = 1.0*np.array(image)       # floating point values
-        contrast_power = 1.5          # higher = more contrast, but also introduces more distortion
-        X = (X)**contrast_power
-        X = X.T  # transpose
-        X = np.fliplr(X) # flip
 
-        mysignal = self.ekman_istft(X, rate, image_duration,minfreq,maxfreq)    # conversion routine
+        GL, mel_scale = False, False  # use Griffin-Lim and  mel scale?
+        if (GL):            # use Griffin-Lim
+            import soundfile as sf   # for librosa
+            n_fft = 2048
+            X = X[::-1,:]  # is upside down for librosa
+            if mel_scale:
+                self.is_status_label.setText("Converting Mel Scale to STFT (slow)...")
+                app.processEvents()
+                X = librosa.feature.inverse.mel_to_stft(X, sr=rate, n_fft=n_fft)
+            self.is_status_label.setText('Starting Griffin-Lim iteration...')
+            app.processEvents()
+            data = librosa.griffinlim(X)
+            sf.write(wav_filename,data,rate)
+        else:       # "my" orig method glitchy but cleaner spectra
+            contrast_power = 1.5          # higher = more contrast, but also introduces more distortion
+            X = (X)**contrast_power
+            X = X.T  # transpose
+            X = np.fliplr(X) # flip
+            self.is_status_label.setText("Starting ISTFT calculation...")
+            app.processEvents()
+            mysignal = self.ekman_istft(X, rate, image_duration,minfreq,maxfreq)    # conversion routine
 
+            # normalize &  convert the signal to int
+            #-------------------------------------------
+            maxval = np.max(mysignal)
+            mysignal = np.array([1.0*x / maxval for x in mysignal])
 
-        # normalize &  convert the signal to int
-        #-------------------------------------------
-        maxval = np.max(mysignal)
-        mysignal = np.array([1.0*x / maxval for x in mysignal])
+            iscale = 32767           # This sets the overall volume, 32727 = full scale
 
-        iscale = 32767           # This sets the overall volume, 32727 = full scale
+            # In the following line, the dtype='i2' selects 16-bit; without it you get 64 bits & no audio
+            data = np.array([int(iscale * x) for x in mysignal], dtype='i2')
 
-        # In the following line, the dtype='i2' selects 16-bit; without it you get 64 bits & no audio
-        data = np.array([int(iscale * x) for x in mysignal], dtype='i2')
+            # write to file
+            #--------------
+            wavfile.write(wav_filename, rate, data)
 
-        # write to file
-        #--------------
-        wavfile.write(wav_filename, rate, data)
 
         self.is_status_label.setText("Finished!  Try opening the WAV file in the Spectrogram!")
 
