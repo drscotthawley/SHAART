@@ -201,7 +201,7 @@ class Rt60Widget(QtWidgets.QWidget):
         leg_fA = self.legend_string(filenameA)
 
         # second file
-        if (filenameB is not "") and (ampB is not None) and (len(ampB) > 1):
+        if (filenameB != "") and (ampB is not None) and (len(ampB) > 1):
            powerB = (ampB+epsilon)**2
            powerB = powerB / maxval   # use same max value as for file A
            dB_B = 10*np.ma.log10(np.abs(powerB))   # "ma"=masked array, throws out -Inf values
