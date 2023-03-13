@@ -19,8 +19,8 @@ Main web page: http://hedges.belmont.edu/~shawley/SHAART<br>
 GitHub page: http://github.com/drscotthawley/SHAART<br>
 
 <p align="center">
-SHAART Acoustic Tools, v 0.7<br>
-(April 7, 2020)<br>
+SHAART Acoustic Tools, v 0.8<br>
+(March 13, 2023)<br>
 <img src="images/shaart_logo.jpg"><br>
 (yes, the name is a joke)<br>
 <a href="#about">About</a> &nbsp;&nbsp;
@@ -156,13 +156,15 @@ And here's an interesting one: a "leveler" effect:<br>
 
 ## Running from Source
 <b>Running SHAART.py from source:</b><br>
-Create a new [Anaconda](https://www.anaconda.com/) Python environment and install dependencies, then run...
+Create a new Python environment and install dependencies:
+```bash
+pip install librosa pyqt6 pillow pyaudio numpy matplotlib
+```
+
+Then run...
 
 ```bash
 cd SHAART/source
-conda create --name shaart python=3.7
-conda activate shaart
-conda install -c conda-forge librosa pyqt pillow pyaudio
 ./SHAART.py
 ```
 
@@ -175,13 +177,7 @@ conda install -c conda-forge librosa pyqt pillow pyaudio
 First follow the instructions above for running from source. Then we will proceed by using `pyinstaller`, that will create a new directory called `SHAART/source/dist/`, **in which a successful build will result in the presence of working binary executable.**
 
 ```bash
-conda install -c conda-forge pyinstaller
-```
-
-And (because of conflicts) downgrade setuptools too, via `pip`:
-
-```bash
-pip install --upgrade 'setuptools<45.0.0'`
+pip install pyinstaller
 ```
 
 ### Mac
@@ -189,8 +185,7 @@ pip install --upgrade 'setuptools<45.0.0'`
 In order to run from source, you'd already need to have XCode, the command-line tools, and HomeBrew installed. Then in we install `python.app` and [an older versions of a few things](https://github.com/pyinstaller/pyinstaller/issues/4067) to build the app:
 
 ```bash
-conda install -c conda-forge python.app joblib=0.11 scikit-learn=0.21.3 librosa=0.6.1
-pyinstaller SHAART.spec --specpath=test
+pyinstaller SHAART.spec
 ```
 
 ...and you'll find `SHAART.app` in `source/dist/`.
@@ -200,7 +195,7 @@ pyinstaller SHAART.spec --specpath=test
 We *could* re-use the .spec file from the Mac build, but it would give us a whole directory instead of one executable.  Instead, run this line:
 
 ```bash
-pyinstaller -w --icon=SHAART.icns --hidden-import="sklearn.utils._cython_blas" --hidden-import="sklearn.neighbors._typedefs" --hidden-import="sklearn.neighbors.quad_tree" --hidden-import="sklearn.tree._utils" --onefile SHAART.py
+pyinstaller SHAART.spec
 ```
 
 ...And then you can just run the `dist/SHAART` executable from the command line.   (Note: I can't seem to get it to be a "clickable icon" in Nautilus/Gnome.  Not sure how to do that.)
@@ -234,10 +229,10 @@ Here are the steps taken to build the Window EXE:
 
 ## Changing the GUI
 
-Run QT5's `designer` or `Designer` app ([good luck finding this on your hard drive](https://stackoverflow.com/questions/37419138/is-qt-designer-bundled-with-anaconda), btw;  instead you might want to just [download QT from the main site](https://www.qt.io/)).  Open `ui_shaart.ui` as an input file.  Change the GUI as you like, save it, and then to generate the .py file, run
+Run QT's `designer` or `Designer` app ([good luck finding this on your hard drive](https://stackoverflow.com/questions/37419138/is-qt-designer-bundled-with-anaconda), btw;  instead you might want to just [download QT from the main site](https://www.qt.io/)).  Open `ui_shaart.ui` as an input file.  Change the GUI as you like, save it, and then to generate the .py file, run
 
 ```bash
-pyuic5 -x ui_shaart.ui -o ui_shaart.py
+pyuic6 -x ui_shaart.ui -o ui_shaart.py
 ```
 
 
@@ -247,7 +242,7 @@ pyuic5 -x ui_shaart.ui -o ui_shaart.py
 ## FAQ
 
 * You do realize what the name "SHAART" sounds like...?  See "About" above.  thatsthejoke.jpg
-* Can it only read WAV files?  No.  Despite saying WAV file everywhere, version 0.7 can read anything [librosa](https://librosa.github.io/librosa/) can read, which is...pretty much anything, e.g. WAV, AIFF, M4A,...?
+* Can it only read WAV files?  No.  Despite saying WAV file everywhere, SHAART can read anything [librosa](https://librosa.github.io/librosa/) can read, which is...pretty much anything, e.g. WAV, AIFF, M4A,...?
 * Can I get a logarithmic frequency scale for the spectrogram?  Not yet, but soon.
 * For waterfall plots, it doesn't clear the window if you change the input data, resulting in multiple plots on the same page.  Bug or feature?
 * Does the "Record" feature work?  Not yet. Use Audacity or....any other utility to record. ;-)
@@ -256,6 +251,10 @@ pyuic5 -x ui_shaart.ui -o ui_shaart.py
 <a name="notes"></a>
 
 ## Release Notes / Issues
+* v0.8:
+   * Upgrades for execution on M1 Macs: 
+       * Upgraded from Qt5 to Qt6
+
 * v0.7:
 
    * Updated code from Python 2.7 to Python 3.7

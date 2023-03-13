@@ -1,5 +1,5 @@
 # Python Qt5 bindings for GUI objects
-from PyQt5 import QtGui, QtWidgets
+from PyQt6 import QtGui, QtWidgets
 
 from matplotlib.backends.backend_qt5agg \
 import FigureCanvasQTAgg as FigureCanvas
@@ -64,8 +64,8 @@ class Rt60Canvas(FigureCanvas):
 
            # we define the widget as expandable
            FigureCanvas.setSizePolicy(self,
-                                      QtWidgets.QSizePolicy.Expanding,
-                                      QtWidgets.QSizePolicy.Expanding)
+                                      QtWidgets.QSizePolicy.Policy.Expanding,
+                                      QtWidgets.QSizePolicy.Policy.Expanding)
            # notify the system of updated policy
            FigureCanvas.updateGeometry(self)
 

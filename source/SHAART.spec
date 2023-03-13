@@ -8,7 +8,7 @@ a = Analysis(['SHAART.py'],
              binaries=[],
              datas=[],
              hiddenimports=['sklearn.utils._cython_blas', 'sklearn.neighbors.typedefs', 'sklearn.tree._utils', 'librosa', 'sklearn.neighbors.quad_tree', 'sklearn.tree', 'scipy._lib.messagestream'],
-             hookspath=[],
+             hookspath=['extra-hooks'],
              runtime_hooks=[],
              excludes=[],
              win_no_prefer_redirects=False,
@@ -36,5 +36,6 @@ coll = COLLECT(exe,
                name='SHAART')
 app = BUNDLE(coll,
              name='SHAART.app',
-             icon='shaart_logo_icon.icns',
+             icon='shaart_logo_icon.ico',
              bundle_identifier=None)
+

@@ -1,5 +1,5 @@
 # Python Qt bindings for GUI objects
-from PyQt5 import QtGui, QtWidgets
+from PyQt6 import QtGui, QtWidgets
 
 # import the Qt5Agg FigureCanvas object, that binds Figure to
 # Qt5Agg backend. It also inherits from QWidget
@@ -50,8 +50,8 @@ class WaveformCanvas(FigureCanvas):
 
            # we define the widget as expandable
            FigureCanvas.setSizePolicy(self,
-                                      QtWidgets.QSizePolicy.Expanding,
-                                      QtWidgets.QSizePolicy.Expanding)
+                                      QtWidgets.QSizePolicy.Policy.Expanding,
+                                      QtWidgets.QSizePolicy.Policy.Expanding)
            # notify the system of updated policy
            FigureCanvas.updateGeometry(self)
 
@@ -114,8 +114,6 @@ class WaveformWidget(QtWidgets.QWidget):
            p = self.canvas.ax.plot(ds_t, ds_amp,color=color,lw=1)
 
            self.canvas.ax.grid(True)
-#           self.canvas.ax.axis([10,ds_t[-1],minval,0])
-#           self.canvas.ax.set_xscale("log", nonposx='clip')
 
 
            # Annotation

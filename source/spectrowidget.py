@@ -1,5 +1,5 @@
 # Python Qt5 bindings for GUI objects
-from PyQt5 import QtGui, QtWidgets
+from PyQt6 import QtGui, QtWidgets
 
 # import the Qt5Agg FigureCanvas object, that binds Figure to
 # Qt5Agg backend. It also inherits from QWidget
@@ -30,8 +30,8 @@ class SpectroCanvas(FigureCanvas):
 
            # we define the widget as expandable
            FigureCanvas.setSizePolicy(self,
-                                      QtWidgets.QSizePolicy.Expanding,
-                                      QtWidgets.QSizePolicy.Expanding)
+                                      QtWidgets.QSizePolicy.Policy.Expanding,
+                                      QtWidgets.QSizePolicy.Policy.Expanding)
            # notify the system of updated policy
            FigureCanvas.updateGeometry(self)
 

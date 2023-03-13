@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # used to parse files more easily
 from __future__ import with_statement
 from __future__ import print_function
@@ -10,9 +10,9 @@ import numpy as np
 import sys
 
 # GUI bindings
-from PyQt5 import QtGui, QtCore, QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QApplication
-from PyQt5.QtCore import *
+from PyQt6 import QtGui, QtCore, QtWidgets
+from PyQt6.QtWidgets import QMainWindow
+from PyQt6.QtCore import *
 
 # import the MainWindow widget from the converted .ui files
 from ui_shaart import Ui_TheMainWindow
@@ -617,7 +617,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
 
     def about_message(self):
         msg = """
-SHAART v.0.7
+SHAART v.0.8
 http://hedges.belmont.edu/~shawley/SHAART
 
 A simple audio analysis suite intended for
@@ -639,4 +639,4 @@ dmw = DesignerMainWindow()
 dmw.show()
 # start the Qt main loop execution, exiting from this script
 # with the same return code of Qt application
-sys.exit(app.exec_())
+sys.exit(app.exec())

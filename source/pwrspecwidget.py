@@ -1,5 +1,5 @@
 # Python Qt5 bindings for GUI objects
-from PyQt5 import QtGui, QtWidgets
+from PyQt6 import QtGui, QtWidgets
 
 # import the Qt5Agg FigureCanvas object, that binds Figure to
 # Qt5Agg backend. It also inherits from QWidget
@@ -50,8 +50,8 @@ class PwrSpecCanvas(FigureCanvas):
 
            # we define the widget as expandable
            FigureCanvas.setSizePolicy(self,
-                                      QtWidgets.QSizePolicy.Expanding,
-                                      QtWidgets.QSizePolicy.Expanding)
+                                      QtWidgets.QSizePolicy.Policy.Expanding,
+                                      QtWidgets.QSizePolicy.Policy.Expanding)
            # notify the system of updated policy
            FigureCanvas.updateGeometry(self)
 
@@ -118,7 +118,7 @@ class PwrSpecWidget(QtWidgets.QWidget):
 
            self.canvas.ax.grid(True)
            self.canvas.ax.axis([10,ds_f[-1],minval,0])
-           self.canvas.ax.set_xscale("log", nonposx='clip')
+           self.canvas.ax.set_xscale("log", nonpositive='clip')
 
 
            # Annotation

@@ -1,7 +1,7 @@
 # Sabine Equation / Room simulation tab
 
 # Python Qt5 bindings for GUI objects
-from PyQt5 import QtGui, QtWidgets
+from PyQt6 import QtGui, QtWidgets
 
 # import the Qt5Agg FigureCanvas object, that binds Figure to
 # Qt5Agg backend. It also inherits from QWidget
@@ -33,8 +33,8 @@ class RcGraphCanvas(FigureCanvas):
 
            # we define the widget as expandable
            FigureCanvas.setSizePolicy(self,
-                                      QtWidgets.QSizePolicy.Expanding,
-                                      QtWidgets.QSizePolicy.Expanding)
+                                      QtWidgets.QSizePolicy.Policy.Expanding,
+                                      QtWidgets.QSizePolicy.Policy.Expanding)
            # notify the system of updated policy
            FigureCanvas.updateGeometry(self)
 
@@ -134,7 +134,6 @@ class RcGraphWidget(QtWidgets.QWidget):
            self.canvas.ax.plot(freqs, rtimes, 'bo-')
            self.canvas.ax.grid(True)
            self.canvas.ax.axis([0.0,freqs[-1]*1.05,0.0, np.max(rtimes)*1.05 ])
-#           self.canvas.ax.set_xscale("log", nonposx='clip')
 
            # Annotation
            self.canvas.ax.set_xlabel('Frequency (Hz)')
