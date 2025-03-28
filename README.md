@@ -19,8 +19,8 @@ Main web page: http://hedges.belmont.edu/~shawley/SHAART<br>
 GitHub page: http://github.com/drscotthawley/SHAART<br>
 
 <p align="center">
-SHAART Acoustic Tools, v 0.8<br>
-(March 13, 2023)<br>
+SHAART Acoustic Tools, v 0.81<br>
+(March 28, 2025)<br>
 <img src="images/shaart_logo.jpg"><br>
 (yes, the name is a joke)<br>
 <a href="#about">About</a> &nbsp;&nbsp;
