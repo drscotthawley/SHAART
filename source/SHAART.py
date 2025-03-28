@@ -477,27 +477,29 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
         global orig_ampB, sample_rateB, ampB, tB, filenameB
         global nofile, nofileB
 
-        if ((1==nofileB) and (False == self.checkBox_autocorr.checkState())):
+        if ((1==nofileB) and (False == self.checkBox_autocorr.isChecked())):
            print("convo_go: Unable to perform convolution")
            return
 
-        if self.checkBox_timerev.checkState():
+        if self.checkBox_timerev.isChecked():
            amp3 = amp[::-1]
            amp = amp3
 
-        if self.checkBox_autocorr.checkState(): # autocorrelation
+        if self.checkBox_autocorr.isChecked(): # autocorrelation
             print("Debug: autocorrelation is checked")
             amp3 = self.my_autocorr(amp)
         elif (0 == nofileB):   # normal convolution
-
+           print("Debug: autocorrelation is NOT checked")
            amp3 = signal.fftconvolve( amp, ampB, mode="same")
 
            maxval_3 = np.max(amp3)
            amp3 *= 0.9999999 / maxval_3
 
-        if self.checkBox_removefirsthalf.checkState():
+        if self.checkBox_removefirsthalf.isChecked():
+           print("Debug: remove first half is checked")
            amp = amp3[amp3.size/2:]    # cut off first half of array
         else:
+           print("Debug: remove first half is NOT checked")
            amp = amp3
 
         orig_amp = amp
@@ -585,7 +587,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
             self.rt60.update_graph(amp,t,filenameA,ampB,tB,filenameB)
         elif (1 == tabnum):   # waveform
             self.waveform.update_graph(amp,t,filenameA,ampB,tB,filenameB,
-                   self.waveform_abs_checkBox.checkState(),self.waveform_env_checkBox.checkState())
+                   self.waveform_abs_checkBox.isChecked(),self.waveform_env_checkBox.isChecked())
             if nofile: return
         elif (2 == tabnum):   # power spectrum
             if nofile: return
