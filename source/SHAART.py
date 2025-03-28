@@ -619,7 +619,7 @@ class DesignerMainWindow(QMainWindow, Ui_TheMainWindow):
 
     def about_message(self):
         msg = """
-SHAART v.0.8
+SHAART v.0.81
 http://hedges.belmont.edu/~shawley/SHAART
 
 A simple audio analysis suite intended for
