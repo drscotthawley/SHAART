@@ -248,9 +248,12 @@ pyuic6 -x ui_shaart.ui -o ui_shaart.py
 <a name="notes"></a>
 
 ## Release Notes / Issues
+* v0.81:
+   * Fixed problem with checkboxes in PyQt6
+   * Rebuilt Mac app: new `pyinstaller` file `SHAART.spec` uses "onefile" bundling which is *very* slow to launch app (~ 1 minute!) but is robust to Qt6/MacOS changes that broke some things. 
 * v0.8:
    * Upgrades for execution on M1 Macs: 
-       * Upgraded from Qt5 to Qt6
+       * Upgraded from PyQt5 to PyQt6
 
 * v0.7:
 
