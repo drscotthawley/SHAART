@@ -292,9 +292,8 @@ the name of the industry-standard SMAART audio analysis software made by
 Rational Acoustics, Inc.  (SHAART is in no way affiliated with SMAART or
 Rational Acoustics, fyi.)  ...I mean, "SHAART" is just hilarious to say.
 
-Author: Dr. Scott H. Hawley, Associate Professor of Physics,
+Author: Dr. Scott H. Hawley, Professor of Physics,
         Belmont University, Nashville TN USA.  
-Date:   April 7, 2020 (original March 24, 2013)
 
 Contact:  Improvements, bug reports, inquiries, donations, etc.: scott.hawley@(belmont)
 
