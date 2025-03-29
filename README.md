@@ -14,8 +14,6 @@
 
 # SHAART Acoustic Tools
 
-Main web page: http://hedges.belmont.edu/~shawley/SHAART<br>
-GitHub page: http://github.com/drscotthawley/SHAART<br>
 
 <p align="center">
 SHAART Acoustic Tools, v 0.81<br>
