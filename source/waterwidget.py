@@ -9,8 +9,6 @@ import FigureCanvasQTAgg as FigureCanvas
 # Matplotlib Figure object
 from matplotlib.figure import Figure
 
-from matplotlib import cm
-import matplotlib.mlab as mlab
 
 import numpy as np
 from mpl_toolkits.mplot3d import axes3d
@@ -59,6 +57,9 @@ class WaterWidget(QtWidgets.QWidget):
 
       def update_graph(self,amp,sample_rate):
            """Updates the graph with new data/annotations"""
+
+           from matplotlib import cm # lazy loading
+           import matplotlib.mlab as mlab 
 
            nsamples = len(amp)
            NFFT = 1024       # the length of the windowing segments

@@ -72,7 +72,7 @@ Most of these features are illustrated in the <a href="#screenshots">Screenshots
 
 ## Downloads
 
-* [Mac Binary application](https://hedges.belmont.edu/~shawley/SHAART/SHAART.app.tar.gz) (337 MB)
+* [Mac Binary application](https://hedges.belmont.edu/~shawley/SHAART/SHAART.app.tar.gz) (93 MB)
 
 *  [Windows executable](https://hedges.belmont.edu/~shawley/SHAART/SHAART.exe) (361 MB). Note that the Windows EXE takes *a while* to come up when you first run it.
 * [Linux executable](https://hedges.belmont.edu/~shawley/SHAART/SHAART_Linux) (132 MB, Pop!\_OS / Ubuntu).  You can also <a href="#source">run from source</a> (below)

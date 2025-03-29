@@ -10,7 +10,6 @@ import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 from matplotlib import cm
-import matplotlib.mlab as mlab
 from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
 
 
